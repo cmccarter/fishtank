@@ -3,15 +3,6 @@
 	Lab 8: Deliverable
 	Animating Fish
 */
-	// Screen attributes
-	const int SCREEN_WIDTH = 1000;
-	const int SCREEN_HEIGHT = 600;
-	const int SCREEN_BPP = 32;
-
-	// Surfaces
-	SDL_Surface *fish = NULL;
-	SDL_Surface *screen = NULL;
-
 
 fish::fish(){
 	// Initialize offsets
@@ -49,3 +40,34 @@ void fish::handle_input(){
 	}
 }
 
+SDL_Surface* fish::load_image(string filename){
+	// Image loaded
+	SDL_Surface* loadedImage = NULL;
+
+	// Optimized image used
+	SDL_Surface* optimizedImage = NULL;
+
+	// Load image
+	loadedImage = IMG_Load(filename.c_str());
+
+	// if image loaded
+	if(loadedImage != NULL){
+		// create optimized image
+		optimizedImage = SDL_DisplayFormat(loadedImage);
+		// Free old image
+		SDL_FreeSurface(loadedImage);
+	}
+
+	return optimizedImage;
+}
+
+void fish::apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){
+	// temp rectangle for offsets
+	SDL_Rect offset;
+	// Get offsets
+	offset.x = x;
+	offset.y = y;
+
+	// Blit Surface
+	SDL_BlitSurface(source, NULL, destination, &offset);
+}

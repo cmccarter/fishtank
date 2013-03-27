@@ -18,6 +18,8 @@ public:
 	void handle_input(); // takes input
 	void move(); // moves fish
 	void show(); // displays fish on screen
+	SDL_Surface* load_image(string)
+	void apply_surface(int, int, SDL_Surface*, SDL_Surface*)
 
 private:
 	
@@ -27,4 +29,4 @@ private:
 	// Velocity of fish
 	int xVel;
 	int yVel;
-}
+};

@@ -1,37 +1,19 @@
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include <iostream> //added just in case
+#include <string>
 
+using namespace std;
 
+	// Screen attributes
+	const int SCREEN_WIDTH = 1000;
+	const int SCREEN_HEIGHT = 600;
+	const int SCREEN_BPP = 32;
 
-SDL_Surface* fish::load_image(string filename){
-	// Image loaded
-	SDL_Surface* loadedImage = NULL;
+	// Surfaces
+	SDL_Surface *fish = NULL;
+	SDL_Surface *screen = NULL;
 
-	// Optimized image used
-	SDL_Surface* optimizedImage = NULL;
-
-	// Load image
-	loadedImage = IMG_Load(filename.c_str());
-
-	// if image loaded
-	if(loadedImage != NULL){
-		// create optimized image
-		optimizedImage = SDL_DisplayFormat(loadedImage);
-		// Free old image
-		SDL_FreeSurface(loadedImage);
-	}
-
-	return optimizedImage;
-}
-
-void fish::apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){
-	// temp rectangle for offsets
-	SDL_Rect offset;
-	// Get offsets
-	offset.x = x;
-	offset.y = y;
-
-	// Blit Surface
-	SDL_BlitSurface(source, NULL, destination, &offset);
-}
 
 bool init(){
 	// Initialize all SDL subsystems
@@ -46,7 +28,7 @@ bool init(){
 	if(screen == NULL) return false;
 
 	// Set Caption
-	SDL_WM_SetCaption("Event Driven Motion", NULL);
+	SDL_WM_SetCaption("Fish Tank", NULL);
 
 	// if everything okay
 	return true;
