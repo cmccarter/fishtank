@@ -25,10 +25,10 @@ void fish::handle_input(){
 	if(event.type == SDL_KEYDOWN){
 		// Adjust velocity
 		switch(event.key.keysym.sym){
-			case SDLK_UP: yVel -= FISH_HEIGHT / 2; break;
-			case SDLK_DOWN: yVel += FISH_HEIGHT / 2; break;
-			case SDLK_LEFT: xVel -= FISH_WIDTH / 2; break;
-			case SDLK_RIGHT: xVel += FISH_WIDTH / 2; break;
+			case SDLK_UP: yVel -= fish_height / 2; break;
+			case SDLK_DOWN: yVel += fish_height / 2; break;
+			case SDLK_LEFT: xVel -= fish_width / 2; break;
+			case SDLK_RIGHT: xVel += fish_width / 2; break;
 		}
 	}
 	// If key released
@@ -36,10 +36,10 @@ void fish::handle_input(){
 		// Adjust velocity
 
 		switch(event.key.keysym.sym){
-			case SDLK_UP: yVel += FISH_HEIGHT / 2; break;
-			case SDLK_DOWN: yVel -= FISH_HEIGHT / 2; break;
-			case SDLK_LEFT: xVel += FISH_WIDTH / 2; break;
-			case SDLK_RIGHT: xVel -= FISH_WIDTH / 2; break;
+			case SDLK_UP: yVel += fish_height / 2; break;
+			case SDLK_DOWN: yVel -= fish_height / 2; break;
+			case SDLK_LEFT: xVel += fish_width / 2; break;
+			case SDLK_RIGHT: xVel -= fish_width / 2; break;
 		}
 	}
 }

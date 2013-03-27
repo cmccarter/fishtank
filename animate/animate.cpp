@@ -2,8 +2,13 @@
 #include "SDL/SDL_image.h"
 #include <iostream> //added for debugging
 #include <string>
+#include "fish.h"
 
 using namespace std;
+
+	//function prototyping
+	bool init();
+	void clean_up();
 
 	// Screen attributes
 	const int SCREEN_WIDTH = 1000;
@@ -11,20 +16,22 @@ using namespace std;
 	const int SCREEN_BPP = 32;
 
 	// Surfaces
-	SDL_Surface *fish = NULL;
+	SDL_Surface *fishimage = NULL;
 	SDL_Surface *screen = NULL;
 
-	
+
 int main(void){
-
-
 
 //try initializing screen
 	if (init() != 1){
+		cout << "Initialization failed." << endl;
 		return 1;
 	}
 
-	//easy program delay
+	//initialize a fish for testing
+	fish trialFish;
+
+	//easy program delay so we do not immediately exit
 	int x;
 	cin >> x;
 
@@ -36,6 +43,7 @@ int main(void){
 bool init(){
 	// Initialize all SDL subsystems
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1){
+		cout << "There was a problem initializing everything."<< endl;
 		return false;
 	}
 
@@ -43,7 +51,10 @@ bool init(){
 	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
 
 	// If error
-	if(screen == NULL) return false;
+	if(screen == NULL){
+		cout << "There was a problem initializing the screen." << endl;
+		return false;
+	}
 
 	// Set Caption
 	SDL_WM_SetCaption("Fish Tank", NULL);
@@ -65,7 +76,7 @@ bool init(){
 }*/
 void clean_up(){
 	// Free image
-	SDL_FreeSurface(fish);
+	SDL_FreeSurface(fishimage);
 	//Quit SDL
 	SDL_Quit();
 }
