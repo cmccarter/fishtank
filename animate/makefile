@@ -1,7 +1,5 @@
-fishtank: main.o animate.o fish.o
-	g++ main.o animate.o fish.o -o fishtank
-main.o: main.cpp
-	g++ -c main.cpp
+fishtank: animate.o fish.o
+	g++ animate.o fish.o -o fishtank
 animate.o: animate.cpp 
 	g++ -c animate.cpp
 fish.o: fish.h fish.cpp

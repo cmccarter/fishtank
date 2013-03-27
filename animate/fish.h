@@ -13,20 +13,20 @@ using namespace std;
 
 // define class
 class fish{
-public:
-	fish(); // Constructor
-	void handle_input(); // takes input
-	void move(); // moves fish
-	void show(); // displays fish on screen
-	SDL_Surface* load_image(string)
-	void apply_surface(int, int, SDL_Surface*, SDL_Surface*)
+	public:
+		fish(); // Constructor
+		void handle_input(); // takes input
+		void move(); // moves fish
+		void show(); // displays fish on screen
+		SDL_Surface* load_image(string);
+		void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 
-private:
+	private:
 	
-	// X and Y offsets of fish
-	int x;
-	int y;
-	// Velocity of fish
-	int xVel;
-	int yVel;
+		// X and Y offsets of fish
+		int x;
+		int y;
+		// Velocity of fish
+		int xVel;
+		int yVel;
 };

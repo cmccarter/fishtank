@@ -3,6 +3,12 @@
 	Lab 8: Deliverable
 	Animating Fish
 */
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include <iostream> //added for debugging
+#include <string>
+
+#include "fish.h"
 
 fish::fish(){
 	// Initialize offsets
@@ -13,8 +19,6 @@ fish::fish(){
 	xVel = 0;
 	yVel = 0;
 }
-
-
 
 void fish::handle_input(){
 	// If key pressed

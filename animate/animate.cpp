@@ -14,6 +14,24 @@ using namespace std;
 	SDL_Surface *fish = NULL;
 	SDL_Surface *screen = NULL;
 
+	
+int main(void){
+
+
+
+//try initializing screen
+	if (init() != 1){
+		return 1;
+	}
+
+	//easy program delay
+	int x;
+	cin >> x;
+
+
+	return 0;
+}
+
 
 bool init(){
 	// Initialize all SDL subsystems
