@@ -22,7 +22,9 @@ class fish{
 		void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 
 	private:
-	
+		// fish sizes
+		int fish_height;
+		int fish_width;
 		// X and Y offsets of fish
 		int x;
 		int y;
