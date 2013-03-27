@@ -1,6 +1,6 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
-#include <iostream> //added just in case
+#include <iostream> //added for debugging
 #include <string>
 
 using namespace std;

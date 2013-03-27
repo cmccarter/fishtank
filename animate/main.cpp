@@ -4,16 +4,23 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 int main(void){
 
-    //Initialize all SDL subsystems
-    if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 )
-	{
-		return 1;    
+
+
+//try initializing screen
+	if (init() != 1){
+		return 1;
 	}
 
+	//easy program delay
+	int x;
+	cin >> x;
 
+
+	return 0;
 }
