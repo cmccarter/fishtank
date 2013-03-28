@@ -20,7 +20,7 @@ fish::fish(){
 	yVel = 0;
 }
 
-void fish::handle_input(){
+void fish::handle_input(SDL_Event event){
 	// If key pressed
 	if(event.type == SDL_KEYDOWN){
 		// Adjust velocity

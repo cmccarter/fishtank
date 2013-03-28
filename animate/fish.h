@@ -15,7 +15,7 @@ using namespace std;
 class fish{
 	public:
 		fish(); // Constructor
-		void handle_input(); // takes input
+		void handle_input(SDL_Event); // takes input
 		void move(); // moves fish
 		void show(); // displays fish on screen
 		SDL_Surface* load_image(string);
