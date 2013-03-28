@@ -7,7 +7,7 @@
 using namespace std;
 
 	//function prototyping
-	bool init();
+	bool initialize();
 	void clean_up();
 
 	// Screen attributes
@@ -21,15 +21,30 @@ using namespace std;
 
 
 int main(void){
+	//declare some variables
+	SDL_Surface* background = NULL;
 
-//try initializing screen
-	if (init() != 1){
+
+	//try initializing screen
+	if (initialize() != 1){
 		cout << "Initialization failed." << endl;
 		return 1;
 	}
 
 	//initialize a fish for testing
 	fish trialFish;
+
+	//try out image storing
+	//yes, I know I'm putting the background in a fish object
+	background = trialFish.load_image("Background.png");
+	trialFish.apply_surface(0, 0, background, screen);
+
+	//this updates the screen
+	if( SDL_Flip ( screen) == -1)
+	{
+		cout << "There was a problem updating the screen." << endl;
+		return 1;
+	}
 
 	//easy program delay so we do not immediately exit
 	int x;
@@ -40,7 +55,7 @@ int main(void){
 }
 
 
-bool init(){
+bool initialize(){
 	// Initialize all SDL subsystems
 	if(SDL_Init(SDL_INIT_EVERYTHING) == -1){
 		cout << "There was a problem initializing everything."<< endl;
@@ -63,9 +78,10 @@ bool init(){
 	return true;
 }
 
-/*bool load_files(){
+/*
+bool load_files(string filename){
 	// Load image
-	image = Load_image("fish.png");
+	image = Load_image(" filename.c_str() );
 
 	// if error
 	if(image == NULL){
@@ -74,6 +90,7 @@ bool init(){
 
 	return true;
 }*/
+
 void clean_up(){
 	// Free image
 	SDL_FreeSurface(fishimage);
