@@ -1,15 +1,20 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <iostream> //added for debugging
+#include <vector>
 #include <string>
 #include "timer.h"
 #include "fish.h"
+#include "food.h"
 
 using namespace std;
 
 	//function prototyping
 	bool initialize();
 	void clean_up();
+	SDL_Surface* load_image(string);
+	void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
+
 
 	//screen attributes
 	const int SCREEN_WIDTH = 1000;
@@ -29,9 +34,6 @@ int main(void){
 
 /* ----------------MAJOR INITIALIZATION----------------- */
 
-	//declare some variables
-	SDL_Surface* background = NULL;
-
 	//try initializing screen
 	if (initialize() != 1){
 		cout << "Initialization failed." << endl;
@@ -49,16 +51,22 @@ int main(void){
 
 	//frame rate regulator
 	Timer fps;
+	
+	//the mouse offsets
+	int x = 0;
+	int y = 0;
+
+	//declare background
+	SDL_Surface* background = load_image("Background.png");
+	//declare every other surface
+	SDL_Surface* fishfood = load_image("small_bubble.png"); //use bubble for test
 
 /* -----------------END MAJOR INITIALIZATION ------------- */
 /* -----------------ELEMENT INITIALIZATION --------------- */
-	//initialize a fish for testing
-	fish trialFish;
 
-	//try out image storing
-	//yes, I know I'm putting the background in a fish object
-	background = trialFish.load_image("Background.png");
-	trialFish.apply_surface(0, 0, background, screen);
+	//creates a vector to store all food items being shown at once
+	vector< food* > FOOD;
+
 
 /* ----------------- END ELEMENT INITIALIZATION ----------- */
 /* ----------------- MAIN LOOP ---------------------------- */
@@ -67,6 +75,8 @@ int main(void){
 
 	//start the frame timer 
 	fps.start();
+
+/* -------------MAIN LOOP: EVENTS ------------------------- */
 
 	//while there are no events to handle
 	while ( SDL_PollEvent( &event) )
@@ -88,6 +98,32 @@ int main(void){
 			//quit the program
 			quit = true;
 		}
+
+		//if the mouse clicks
+		if( event.type == SDL_MOUSEBUTTONDOWN )
+		{
+			//if(event.button.button == SDL_BUTTON_LEFT )
+			{
+				//put left click action here
+				FOOD.push_back(new food(event, fishfood));
+			}
+		}
+
+	}
+
+/* ---------------------MAIN LOOP: LOGIC ---------------- */
+	//move functions for each object
+	for(int i = 0; i < FOOD.size(); i++){
+		FOOD[i]->move();
+	}
+
+/* ---------------------MAIN LOOP: RENDERING ------------ */
+	//apply background
+	apply_surface(0, 0, background, screen);
+
+	//apply every other object
+	for(int I = 0; I< FOOD.size(); I++){
+		apply_surface(FOOD[I]->getX(),FOOD[I]->getY(),FOOD[I]->show(),screen);	
 	}
 
 	//this updates the screen
@@ -138,6 +174,40 @@ bool initialize(){
 	// if everything okay
 	return true;
 }
+
+SDL_Surface* load_image(string filename){
+	// Image loaded
+	SDL_Surface* loadedImage = NULL;
+
+	// Optimized image used
+	SDL_Surface* optimizedImage = NULL;
+
+	// Load image
+	loadedImage = IMG_Load(filename.c_str());
+
+	// if image loaded
+	if(loadedImage != NULL){
+		// create optimized image
+		optimizedImage = SDL_DisplayFormat(loadedImage);
+		// Free old image
+		SDL_FreeSurface(loadedImage);
+	}
+
+	return optimizedImage;
+}
+
+void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){
+	
+	// temp rectangle for offsets
+	SDL_Rect offset;
+	// Get offsets
+	offset.x = x;
+	offset.y = y;
+
+	// Blit Surface
+	SDL_BlitSurface(source, NULL, destination, &offset);
+}
+
 
 /*
 bool load_files(string filename){

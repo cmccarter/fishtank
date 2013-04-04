@@ -18,8 +18,6 @@ class fish{
 		void handle_input(SDL_Event); // takes input
 		void move(); // moves fish
 		void show(); // displays fish on screen
-		SDL_Surface* load_image(string);
-		void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 
 	private:
 		// fish sizes

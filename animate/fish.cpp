@@ -44,34 +44,3 @@ void fish::handle_input(SDL_Event event){
 	}
 }
 
-SDL_Surface* fish::load_image(string filename){
-	// Image loaded
-	SDL_Surface* loadedImage = NULL;
-
-	// Optimized image used
-	SDL_Surface* optimizedImage = NULL;
-
-	// Load image
-	loadedImage = IMG_Load(filename.c_str());
-
-	// if image loaded
-	if(loadedImage != NULL){
-		// create optimized image
-		optimizedImage = SDL_DisplayFormat(loadedImage);
-		// Free old image
-		SDL_FreeSurface(loadedImage);
-	}
-
-	return optimizedImage;
-}
-
-void fish::apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){
-	// temp rectangle for offsets
-	SDL_Rect offset;
-	// Get offsets
-	offset.x = x;
-	offset.y = y;
-
-	// Blit Surface
-	SDL_BlitSurface(source, NULL, destination, &offset);
-}
