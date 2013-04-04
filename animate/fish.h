@@ -17,7 +17,11 @@ class fish{
 		fish(); // Constructor
 		void handle_input(SDL_Event); // takes input
 		void move(); // moves fish
-		void show(); // displays fish on screen
+		SDL_Surface* show(); // displays fish on screen
+		bool iWasClicked(SDL_Event); // returns true if click was on fish
+
+		int getX();
+		int getY();
 
 	private:
 		// fish sizes
@@ -29,4 +33,7 @@ class fish{
 		// Velocity of fish
 		int xVel;
 		int yVel;
+
+		//pointer to the image
+		SDL_Surface* image;
 };

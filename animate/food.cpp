@@ -23,7 +23,7 @@ food::food(SDL_Event event, SDL_Surface* fishfood){
 	y = event.button.y;
 	
 	xVel = 0;
-	yVel = 1;
+	yVel = 5;
 
 	int kill = 0;
 

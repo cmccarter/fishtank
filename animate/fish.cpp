@@ -18,6 +18,14 @@ fish::fish(){
 	// Initialize velocity
 	xVel = 0;
 	yVel = 0;
+
+	//default fish will be a 40x40 square
+	fish_height = 40;
+	fish_width = 40;
+}
+
+SDL_Surface* fish::show(){
+        return image;
 }
 
 void fish::handle_input(SDL_Event event){
@@ -44,3 +52,24 @@ void fish::handle_input(SDL_Event event){
 	}
 }
 
+void fish::move(){
+	//increment speed
+	x+=xVel;
+	y+=yVel;
+
+	//add wall collision detection
+}
+
+bool fish::iWasClicked(SDL_Event event){
+	//NOTE: for now, we pretend each fish is a 40 pixel rectangle
+	if ((event.button.x >= x)&&( event.button.x <= x + fish_width )&&(event.button.y >= y)&&( event.button.y <= y + fish_height)) return (true);
+	else return (false);
+}
+
+int fish::getX(){
+	return x;
+}
+
+int fish::getY(){
+	return y;
+}
