@@ -67,7 +67,7 @@ int main(void){
 	cout << "Loading fishfood image." << endl;
 	SDL_Surface* fishfood = load_image("small_bubble.png"); //use bubble for test
 	cout << "Loading first fish." << endl;	
-
+	SDL_Surface* fishtest = load_image("bubbles1_right.png");
 
 /* -----------------END MAJOR INITIALIZATION ------------- */
 /* -----------------ELEMENT INITIALIZATION --------------- */
@@ -76,6 +76,9 @@ int main(void){
 	vector< food* > FOOD;
 	//creates a vector to store all the fish
 	vector< fish* > FISH;
+
+	//initializes fish
+	FISH.push_back(new fish(500, 300, fishtest));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;

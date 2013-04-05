@@ -24,6 +24,19 @@ fish::fish(){
 	fish_width = 40;
 }
 
+fish::fish(int a, int b, SDL_Surface* input){
+	x = a;
+	y = b;
+
+	xVel = 0;
+	yVel = 0;
+
+	fish_height = 40;
+	fish_width = 40;
+
+	image = input;
+}
+
 SDL_Surface* fish::show(){
         return image;
 }
@@ -61,7 +74,6 @@ void fish::move(){
 }
 
 bool fish::iWasClicked(SDL_Event event){
-	//NOTE: for now, we pretend each fish is a 40 pixel rectangle
 	if ((event.button.x >= x)&&( event.button.x <= x + fish_width )&&(event.button.y >= y)&&( event.button.y <= y + fish_height)) return (true);
 	else return (false);
 }
