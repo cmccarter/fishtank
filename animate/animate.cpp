@@ -65,7 +65,7 @@ int main(void){
 
 	//declare every other surface
 	cout << "Loading fishfood image." << endl;
-	SDL_Surface* fishfood = load_image("small_bubble.png"); //use bubble for test
+	SDL_Surface* fishfood = load_image("fishfood.png"); //use bubble for test
 	cout << "Loading first fish." << endl;	
 	SDL_Surface* fishtest = load_image("bubbles1_right.png");
 
