@@ -56,18 +56,26 @@ int main(void){
 	int x = 0;
 	int y = 0;
 
+	int flags = IMG_INIT_JPG | IMG_INIT_PNG;
+	int initted=IMG_Init(flags);
+	if( initted & flags != flags) {
+		cout<<"Could not initialize SDL_Image." << endl;
+        	cout<<"Reason: " << IMG_GetError() << endl;
+    	}
+
+
 	//Declare images below. Loading is time and memory intensive...
 	//So we will load images here, to pass to objects, not in objects themselves.
 
 	//declare background
 	cout << "Loading background image 1." << endl;
-	SDL_Surface* background = load_image("Background.png");
+	SDL_Surface* background = IMG_Load("Background.png");
 
 	//declare every other surface
 	cout << "Loading fishfood image." << endl;
-	SDL_Surface* fishfood = load_image("fishfood.png"); //use bubble for test
+	SDL_Surface* fishfood = IMG_Load("fishfood.png"); //use bubble for test
 	cout << "Loading first fish." << endl;	
-	SDL_Surface* fishtest = load_image("bubbles1_right.png");
+	SDL_Surface* fishtest = IMG_Load("bubbles1_right.png");
 
 /* -----------------END MAJOR INITIALIZATION ------------- */
 /* -----------------ELEMENT INITIALIZATION --------------- */
@@ -184,12 +192,19 @@ int main(void){
 	}
 
 	//check for element killing (Conor will explain)
-	
+	for(int i = 0; i < FOOD.size(); i++){
+		//check for kill variable in each element
+		//if (kill == 1) swap this element with back element and pop back
+	}
+
+	for(int j = 0; j < FISH.size(); j++){
+		//perform similar computation
+	}
+
 	}
 
 /* -------------------END MAIN LOOP------------------------ */
 	//cleanup here if needed
-
 	return 0;
 }
 
@@ -216,7 +231,7 @@ bool initialize(){
 	// if everything okay
 	return true;
 }
-
+//use IMG_Load instead (IMG_Load is built in and handles transparency)
 SDL_Surface* load_image(string filename){
 	// Image loaded
 	SDL_Surface* loadedImage = NULL;
