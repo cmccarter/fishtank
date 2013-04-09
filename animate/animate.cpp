@@ -14,7 +14,7 @@ using namespace std;
 	void clean_up();
 	SDL_Surface* load_image(string);
 	void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
-
+	bool check_collision( SDL_Rect, SDL_Rect);
 
 	//screen attributes
 	const int SCREEN_WIDTH = 1000;
@@ -29,6 +29,9 @@ using namespace std;
 
 	//prepare for possible event
 	SDL_Event event;
+
+	// Rect for tank constraints
+	SDL_Rect tank;
 
 int main(void){
 
@@ -69,6 +72,7 @@ int main(void){
 	cout << "Loading first fish." << endl;	
 	SDL_Surface* fishtest = load_image("bubbles1_right.png");
 
+
 /* -----------------END MAJOR INITIALIZATION ------------- */
 /* -----------------ELEMENT INITIALIZATION --------------- */
 
@@ -78,7 +82,7 @@ int main(void){
 	vector< fish* > FISH;
 
 	//initializes fish
-	FISH.push_back(new fish(500, 300, fishtest));
+	FISH.push_back(new fish(100, 100, fishtest));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;
@@ -127,16 +131,24 @@ int main(void){
 			{
 				//on right click, make new fish food
 				FOOD.push_back(new food(event, fishfood));
-				for(int i = 0; i < FISH.size(); i++){
-					if(FISH[i]->getX() > FOOD[0]->getX() && FISH[i]->getY() > FOOD[0]->getY()){
-						FISH[i]->setXvel(-FOOD[0]->getX() / 15);
-						FISH[i]->setYvel(-FOOD[0]->getY() / 15);
+
+				// for each fish, send towards food
+				for(int i = 0; i < FISH.size(); i++){ // if fish behind food, go towards food
+					if(FISH[i]->getX() > FOOD.back()->getX() || FISH[i]->getY() > FOOD.back()->getY()){
+						FISH[i]->setXvel(-FOOD.back()->getX() / 60);
+						FISH[i]->setYvel(-FOOD.back()->getY() / 60);
 
 					}
-					else{
-						FISH[i]->setXvel(FOOD[0]->getX() / 15);
-						FISH[i]->setYvel(FOOD[0]->getY() / 15);	
+					else{ // if fish is in front of food, turn around
+						FISH[i]->setXvel(FOOD.back()->getX() / 120);
+						FISH[i]->setYvel(FOOD.back()->getY() / 120);	
 					}
+					/*if(check_collision(FOOD.back()->foodBox, FISH[i]->fishBox)){
+						FISH[i]->setXvel(0);
+						FISH[i]->setYvel(0);
+						FOOD.pop_back();
+
+					}*/
 						
 				}
 			}
@@ -248,6 +260,33 @@ SDL_Surface* load_image(string filename){
 	}
 
 	return optimizedImage;
+}
+
+bool check_collision(SDL_Rect A, SDL_Rect B){
+	// Sides of rectangles A is fish, B is other object
+		int leftA, leftB;
+		int rightA, rightB;
+		int topA, topB;
+		int bottomA, bottomB;
+	// Calculate sides of fish rect
+		leftA = A.x;
+		rightA = A.x + A.w;
+		topA = A.y;
+		bottomA = A.y + A.h;
+
+	// Calculate sides of other box
+		leftB  = B.x;
+		rightB = B.x + B.w;
+		topB = B.y;
+		bottomB = A.y + A.h;
+
+	// Check if sides from A are outside of B
+		if(bottomA <= topB) return false;
+		if(topA >= bottomB) return false;
+		if(rightA <= leftB) return false;
+
+		return true;
+
 }
 
 void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){

@@ -28,4 +28,6 @@ class food{
 
 		int getX();
 		int getY();
+
+		SDL_Rect foodBox;
 };

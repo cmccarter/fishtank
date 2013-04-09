@@ -21,8 +21,16 @@ fish::fish(){
 	yVel = 0;
 
 	//default fish will be a 40x40 square
-	fish_height = 40;
-	fish_width = 40;
+	fish_height = 480;
+	fish_width = 640;
+
+	// offsets for hit box
+	fishBox.y = 0;
+	fishBox.x = 0;
+
+	// Hit box dimensions
+	fishBox.w = fish_width;
+	fishBox.h = fish_height;
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
@@ -32,10 +40,18 @@ fish::fish(int a, int b, SDL_Surface* input){
 	xVel = 0;
 	yVel = 0;
 
-	fish_height = 40;
-	fish_width = 40;
+	fish_height = 480;
+	fish_width = 640;
 
 	image = input;
+
+	// offsets for hit box
+	fishBox.y = 0;
+	fishBox.x = 0;
+
+	// Hit box dimensions
+	fishBox.w = fish_width;
+	fishBox.h = fish_height;
 }
 
 SDL_Surface* fish::show(){
@@ -65,22 +81,19 @@ void fish::handle_input(SDL_Event event){
 		}
 	}
 
-	/*// If food is falling (indicated by a right click)
-	else if(event.type == SDL_MOUSEBUTTONDOWN){
-		if(event.button.button == SDL_BUTTON_RIGHT){
-			xVel = food::getX() / 5;
-			yVel = food::getY() / 5;
-		}
-	}*/
 }
 
-//bool fish::check_collision
+
+
 void fish::move(){
 	//increment speed
 	x+=xVel;
 	y+=yVel;
+	fishBox.x = x;
+	fishBox.y = y;
 
-	//add wall collision detection
+	if((x< 0) || (x + fish_width > 1000)) xVel = -xVel;
+	if((y < 0) || (y + fish_height > 600)) yVel = -yVel;
 }
 
 bool fish::iWasClicked(SDL_Event event){
