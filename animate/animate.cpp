@@ -6,6 +6,7 @@
 #include "timer.h"
 #include "fish.h"
 #include "food.h"
+#include "bubble.h"
 
 using namespace std;
 
@@ -73,9 +74,11 @@ int main(void){
 
 	//declare every other surface
 	cout << "Loading fishfood image." << endl;
-	SDL_Surface* fishfood = IMG_Load("fishfood.png"); //use bubble for test
+	SDL_Surface* fishfood = IMG_Load("fishfood.png");
 	cout << "Loading first fish." << endl;	
 	SDL_Surface* fishtest = IMG_Load("bubbles1_right.png");
+	cout << "Load the bubbles!." << endl;
+	SDL_Surface* bubblepic = IMG_Load("small_bubble.png"); //use bubble for test
 
 /* -----------------END MAJOR INITIALIZATION ------------- */
 /* -----------------ELEMENT INITIALIZATION --------------- */
@@ -84,6 +87,8 @@ int main(void){
 	vector< food* > FOOD;
 	//creates a vector to store all the fish
 	vector< fish* > FISH;
+	//bubble vector
+	vector< bubble* > BUBBLES;
 
 	//initializes fish
 	FISH.push_back(new fish(500, 300, fishtest));
@@ -131,6 +136,10 @@ int main(void){
 		//if the mouse clicks
 		else if( event.type == SDL_MOUSEBUTTONDOWN )
 		{
+
+			//put the bubbles here
+			BUBBLES.push_back(new bubble(event, bubblepic));
+
 			if(event.button.button == SDL_BUTTON_RIGHT )
 			{
 				//on right click, make new fish food
@@ -161,6 +170,10 @@ int main(void){
 		FISH[j]->move();
 	}
 
+	for(int k = 0; k < BUBBLES.size(); k++){
+		BUBBLES[k]->move();
+	}
+
 /* ---------------------MAIN LOOP: RENDERING ------------ */
 	//apply background
 	apply_surface(0, 0, background, screen);
@@ -173,6 +186,11 @@ int main(void){
 	for(int J = 0; J< FISH.size(); J++){
 		apply_surface(FISH[J]->getX(),FISH[J]->getY(),FISH[J]->show(),screen);
 	}
+
+	for(int K = 0; K< BUBBLES.size(); K++){
+		apply_surface(BUBBLES[K]->getX(),BUBBLES[K]->getY(),BUBBLES[K]->show(),screen);
+	}
+	
 
 	//this updates the screen
 	if( SDL_Flip (screen) == -1)
