@@ -23,6 +23,9 @@ class fish{
 
 		int getX();
 		int getY();
+		void setYvel(int);
+		void setXvel(int);
+		SDL_Rect fishBox;
 
 	private:
 		// fish sizes
@@ -34,7 +37,7 @@ class fish{
 		// Velocity of fish
 		int xVel;
 		int yVel;
-
+		
 		//pointer to the image
 		SDL_Surface* image;
 };

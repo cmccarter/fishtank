@@ -9,6 +9,8 @@ food::food(){
 	//position
 	x = 0;
 	y = 0;
+	foodBox.x = x;
+	foodBox.y = y;
 
 	//velocity
 	xVel = 0;
@@ -16,12 +18,17 @@ food::food(){
 
 	//self destruct order
 	int kill = 0;
+	foodBox.w = 20;
+	foodBox.h = 20;
 }
 
 food::food(SDL_Event event, SDL_Surface* fishfood){
 	x = event.button.x;
 	y = event.button.y;
-	
+	foodBox.x = x;
+	foodBox.y = y;
+	foodBox.w = 20;
+	foodBox.h = 20;
 	xVel = 0;
 	yVel = 5;
 
@@ -33,6 +40,8 @@ food::food(SDL_Event event, SDL_Surface* fishfood){
 void food::move(){
 	x += xVel;
 	y += yVel;
+
+
 
 	//if the food has hit the bottom of the tank
 	if( y > 470 ){
