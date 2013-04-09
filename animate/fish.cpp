@@ -9,6 +9,7 @@
 #include <string>
 
 #include "fish.h"
+#include "food.h"
 
 fish::fish(){
 	// Initialize offsets
@@ -63,8 +64,17 @@ void fish::handle_input(SDL_Event event){
 			case SDLK_RIGHT: xVel -= fish_width / 2; break;
 		}
 	}
+
+	/*// If food is falling (indicated by a right click)
+	else if(event.type == SDL_MOUSEBUTTONDOWN){
+		if(event.button.button == SDL_BUTTON_RIGHT){
+			xVel = food::getX() / 5;
+			yVel = food::getY() / 5;
+		}
+	}*/
 }
 
+//bool fish::check_collision
 void fish::move(){
 	//increment speed
 	x+=xVel;
@@ -84,4 +94,14 @@ int fish::getX(){
 
 int fish::getY(){
 	return y;
+}
+
+void fish::setXvel(int xin){
+	xVel = xin;
+	return;
+}
+
+void fish::setYvel(int yin){
+	yVel = yin;
+	return;
 }

@@ -127,6 +127,18 @@ int main(void){
 			{
 				//on right click, make new fish food
 				FOOD.push_back(new food(event, fishfood));
+				for(int i = 0; i < FISH.size(); i++){
+					if(FISH[i]->getX() > FOOD[0]->getX() && FISH[i]->getY() > FOOD[0]->getY()){
+						FISH[i]->setXvel(-FOOD[0]->getX() / 15);
+						FISH[i]->setYvel(-FOOD[0]->getY() / 15);
+
+					}
+					else{
+						FISH[i]->setXvel(FOOD[0]->getX() / 15);
+						FISH[i]->setYvel(FOOD[0]->getY() / 15);	
+					}
+						
+				}
 			}
 			else if (event.button.button == SDL_BUTTON_LEFT )
 			{

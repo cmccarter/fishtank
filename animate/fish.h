@@ -23,6 +23,8 @@ class fish{
 
 		int getX();
 		int getY();
+		void setYvel(int);
+		void setXvel(int);
 
 	private:
 		// fish sizes
