@@ -38,9 +38,12 @@ bubble::bubble(SDL_Event event, SDL_Surface* bubblepic){
 void bubble::move(){
 	y -= yVel;
 
+
 	if (x < xStart - 5) x += xVel;	
 	else if (x > xStart + 5) x -= xVel;
 	else x = x + ( rand() % ( 2*xVel + 1 ) ) - 2;	
+
+	if (y < 0) execute();
 
 }
 
@@ -48,7 +51,7 @@ SDL_Surface* bubble::show(){
 	return image;
 }
 
-void bubble::destruct(){
+void bubble::execute(){
 	kill = 1;
 }
 
@@ -58,4 +61,8 @@ int bubble::getX(){
 
 int bubble::getY(){
 	return y;
+}
+
+int bubble::condemned(){
+	return kill;
 }

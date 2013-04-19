@@ -69,15 +69,17 @@ int main(void){
 
 	//declare background
 	cout << "Loading background image 1." << endl;
-	SDL_Surface* background = IMG_Load("Background.png");
+	SDL_Surface* background = IMG_Load("images/Background.png");
 
 	//declare every other surface
 	cout << "Loading fishfood image." << endl;
-	SDL_Surface* fishfood = IMG_Load("fishfood.png");
+	SDL_Surface* fishfood = IMG_Load("images/small_food.png");
 	cout << "Loading first fish." << endl;	
-	fishtest = IMG_Load("gurgle_sprite.png");
+	fishtest = IMG_Load("images/gurgle_sprite.png");
 	cout << "Load the bubbles!." << endl;
-	SDL_Surface* bubblepic = IMG_Load("small_bubble.png"); //use bubble for test
+	SDL_Surface* medium_bubblepic = IMG_Load("images/medium_bubble.png"); //use bubble for test
+	SDL_Surface* small_bubblepic = IMG_Load("images/small_bubble.png"); //use bubble for test
+	
 
 
 /* -----------------END MAJOR INITIALIZATION ------------- */
@@ -138,7 +140,9 @@ int main(void){
 		{
 
 			//put the bubbles here
-			BUBBLES.push_back(new bubble(event, bubblepic));
+			BUBBLES.push_back(new bubble(event, medium_bubblepic));
+			BUBBLES.push_back(new bubble(event, small_bubblepic));
+			BUBBLES.push_back(new bubble(event, small_bubblepic));
 
 			if(event.button.button == SDL_BUTTON_RIGHT )
 			{
@@ -229,11 +233,30 @@ int main(void){
 		SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
 	}
 
+//implement killing in food
+/*
 	//check for element killing (Conor will explain)
 	for(int i = 0; i < FOOD.size(); i++){
-		//check for kill variable in each element
-		//if (kill == 1) swap this element with back element and pop back
+		if(FOOD[i]->condemned()){
+			delete FOOD[i];
+			FOOD[i]=FOOD[FOOD.size()-1];
+			FOOD.pop_back();
+			i--;
+		}
 	}
+*/
+
+	for(int k = 0; k < BUBBLES.size(); k++){
+		if(BUBBLES[k]->condemned()){
+			delete BUBBLES[k];
+			BUBBLES[k]=BUBBLES[BUBBLES.size()-1];
+			BUBBLES.pop_back();
+			k--;
+			cout << "condemned!" << endl;
+		}
+        }
+
+	cout << BUBBLES.size() << endl;
 
 	for(int j = 0; j < FISH.size(); j++){
 		//perform similar computation

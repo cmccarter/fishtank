@@ -27,8 +27,9 @@ class bubble{
 		bubble(SDL_Event, SDL_Surface*);
 		void move();
 		SDL_Surface* show();
-		void destruct();	
+		void execute();	
 
 		int getX();
 		int getY();
+		int condemned();
 };
