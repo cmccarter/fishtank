@@ -7,21 +7,14 @@
 #include "fish.h"
 #include "food.h"
 #include "bubble.h"
+#include "global.h"
 
 using namespace std;
-
-	//function prototyping
-	bool initialize();
-	void clean_up();
-	SDL_Surface* load_image(string);
-	void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
-	bool check_collision( SDL_Rect, SDL_Rect);
-
-	//screen attributes
+//screen attributes
 	const int SCREEN_WIDTH = 1000;
 	const int SCREEN_HEIGHT = 600;
 	const int SCREEN_BPP = 32;
-
+	 SDL_Rect gurgleClip[3];
 	//frames per second
 	const int FRAMES_PER_SECOND = 30;
 
@@ -33,6 +26,9 @@ using namespace std;
 
 	// Rect for tank constraints
 	SDL_Rect tank;
+	SDL_Surface* fishtest = NULL;
+	// Rect for sprite sheeet clips
+	
 
 int main(void){
 
@@ -79,7 +75,7 @@ int main(void){
 	cout << "Loading fishfood image." << endl;
 	SDL_Surface* fishfood = IMG_Load("fishfood.png");
 	cout << "Loading first fish." << endl;	
-	SDL_Surface* fishtest = IMG_Load("bubbles1_right.png");
+	fishtest = IMG_Load("gurgle_sprite.png");
 	cout << "Load the bubbles!." << endl;
 	SDL_Surface* bubblepic = IMG_Load("small_bubble.png"); //use bubble for test
 
@@ -151,14 +147,14 @@ int main(void){
 
 				// for each fish, send towards food
 				for(int i = 0; i < FISH.size(); i++){ // if fish behind food, go towards food
-					if(FISH[i]->getX() > FOOD.back()->getX() || FISH[i]->getY() > FOOD.back()->getY()){
-						FISH[i]->setXvel(-FOOD.back()->getX() / 60);
-						FISH[i]->setYvel(-FOOD.back()->getY() / 60);
+					if(FISH[i]->getX() > FOOD[0]->getX() || FISH[i]->getY() > FOOD[0]->getY()){
+						FISH[i]->setXvel(-FOOD[0]->getX() / 60);
+						FISH[i]->setYvel(-FOOD[0]->getY() / 60);
 
 					}
 					else{ // if fish is in front of food, turn around
-						FISH[i]->setXvel(FOOD.back()->getX() / 120);
-						FISH[i]->setYvel(FOOD.back()->getY() / 120);	
+						FISH[i]->setXvel(FOOD[0]->getX() / 120);
+						FISH[i]->setYvel(FOOD[0]->getY() / 120);	
 					}
 					/*if(check_collision(FOOD.back()->foodBox, FISH[i]->fishBox)){
 						FISH[i]->setXvel(0);
@@ -331,9 +327,17 @@ void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination){
 	offset.y = y;
 
 	// Blit Surface
+
 	SDL_BlitSurface(source, NULL, destination, &offset);
 }
 
+void apply_rect(int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip=NULL){
+	SDL_Rect offset;
+	offset.x = x;
+	offset.y = y;
+
+	SDL_BlitSurface(source, clip, destination, &offset);
+}
 
 /*
 bool load_files(string filename){

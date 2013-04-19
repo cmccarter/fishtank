@@ -5,6 +5,9 @@
 */
 
 // Headers
+
+#ifndef FISH_H
+#define FISH_H
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
@@ -26,6 +29,7 @@ class fish{
 		void setYvel(int);
 		void setXvel(int);
 		SDL_Rect fishBox;
+		void set_clips();
 
 	private:
 		// fish sizes
@@ -37,7 +41,15 @@ class fish{
 		// Velocity of fish
 		int xVel;
 		int yVel;
+		int offset;
 		
+		int frame;
+		int status;
+	
+
+	
 		//pointer to the image
 		SDL_Surface* image;
 };
+
+#endif

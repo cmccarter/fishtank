@@ -10,7 +10,10 @@
 
 #include "fish.h"
 #include "food.h"
+#include "global.h"
 
+
+extern SDL_Rect gurgleClip[3];
 fish::fish(){
 	// Initialize offsets
 	x = 0;
@@ -20,9 +23,10 @@ fish::fish(){
 	xVel = 0;
 	yVel = 0;
 
+	offset = 0;
 	//default fish will be a 40x40 square
-	fish_height = 480;
-	fish_width = 640;
+	fish_height = 200;
+	fish_width = 100;
 
 	// offsets for hit box
 	fishBox.y = 0;
@@ -39,9 +43,11 @@ fish::fish(int a, int b, SDL_Surface* input){
 
 	xVel = 0;
 	yVel = 0;
+	offset = 0;
 
-	fish_height = 480;
-	fish_width = 640;
+	frame = 0;
+	fish_height = 200;
+	fish_width = 100;
 
 	image = input;
 
@@ -52,10 +58,16 @@ fish::fish(int a, int b, SDL_Surface* input){
 	// Hit box dimensions
 	fishBox.w = fish_width;
 	fishBox.h = fish_height;
+
 }
 
 SDL_Surface* fish::show(){
-        return image;
+		frame++;
+		if(frame >= 3){
+				frame = 0;
+		}
+		apply_rect(SCREEN_WIDTH - fish_width, SCREEN_HEIGHT - fish_height, fishtest, screen, &gurgleClip[frame]);
+       return image;
 }
 
 void fish::handle_input(SDL_Event event){
@@ -63,10 +75,10 @@ void fish::handle_input(SDL_Event event){
 	if(event.type == SDL_KEYDOWN){
 		// Adjust velocity
 		switch(event.key.keysym.sym){
-			case SDLK_UP: yVel -= fish_height / 2; break;
-			case SDLK_DOWN: yVel += fish_height / 2; break;
-			case SDLK_LEFT: xVel -= fish_width / 2; break;
-			case SDLK_RIGHT: xVel += fish_width / 2; break;
+			case SDLK_UP: yVel -= fish_height / 15; break;
+			case SDLK_DOWN: yVel += fish_height/ 15; break;
+			case SDLK_LEFT: xVel -= fish_width/ 15; break;
+			case SDLK_RIGHT: xVel += fish_width/ 15; break;
 		}
 	}
 	// If key released
@@ -74,10 +86,10 @@ void fish::handle_input(SDL_Event event){
 		// Adjust velocity
 
 		switch(event.key.keysym.sym){
-			case SDLK_UP: yVel += fish_height / 2; break;
-			case SDLK_DOWN: yVel -= fish_height / 2; break;
-			case SDLK_LEFT: xVel += fish_width / 2; break;
-			case SDLK_RIGHT: xVel -= fish_width / 2; break;
+			case SDLK_UP: yVel += fish_height/ 15; break;
+			case SDLK_DOWN: yVel -= fish_height/ 15; break;
+			case SDLK_LEFT: xVel += fish_width/ 15; break;
+			case SDLK_RIGHT: xVel -= fish_width/ 15; break;
 		}
 	}
 
@@ -92,8 +104,9 @@ void fish::move(){
 	fishBox.x = x;
 	fishBox.y = y;
 
-	if((x< 0) || (x + fish_width > 1000)) xVel = -xVel;
+	if((x< 0) || (x + 2*fish_width > 1000)) xVel = -xVel;
 	if((y < 0) || (y + fish_height > 600)) yVel = -yVel;
+
 }
 
 bool fish::iWasClicked(SDL_Event event){
@@ -117,4 +130,22 @@ void fish::setXvel(int xin){
 void fish::setYvel(int yin){
 	yVel = yin;
 	return;
+}
+
+void fish::set_clips(){
+
+	gurgleClip[0].x = 0;
+	gurgleClip[0].y = 0;
+	gurgleClip[0].w = 640;
+	gurgleClip[0].h = 480;
+
+	gurgleClip[1].x = 0;
+	gurgleClip[1].y = 480;
+	gurgleClip[1].w = 640;
+	gurgleClip[1].h = 480;
+
+	gurgleClip[2].x = 0;
+	gurgleClip[2].y = 480*2;
+	gurgleClip[2].w = 640;
+	gurgleClip[2].h = 480;
 }
