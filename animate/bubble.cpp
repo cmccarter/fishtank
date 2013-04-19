@@ -3,6 +3,7 @@
 #include "bubble.h"
 #include <string>
 #include <stdlib.h>
+#include <iostream>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ bubble::bubble(){
 	xStart = 0;
 
 	//self destruct order
-	int kill = 0;
+	kill = 0;
 }
 
 bubble::bubble(SDL_Event event, SDL_Surface* bubblepic){
@@ -30,7 +31,7 @@ bubble::bubble(SDL_Event event, SDL_Surface* bubblepic){
 	xVel = 2;
 	yVel = 10;
 
-	int kill = 0;
+	kill = 0;
 
 	image = bubblepic;
 }
@@ -44,15 +45,10 @@ void bubble::move(){
 	else x = x + ( rand() % ( 2*xVel + 1 ) ) - 2;	
 
 	if (y < 0) execute();
-
 }
 
 SDL_Surface* bubble::show(){
 	return image;
-}
-
-void bubble::execute(){
-	kill = 1;
 }
 
 int bubble::getX(){
@@ -63,6 +59,10 @@ int bubble::getY(){
 	return y;
 }
 
+void bubble::execute(){
+	kill = 1;
+}
+
 int bubble::condemned(){
-	return kill;
+	return (kill);
 }

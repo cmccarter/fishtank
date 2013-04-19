@@ -17,7 +17,7 @@ food::food(){
 	yVel = 1;
 
 	//self destruct order
-	int kill = 0;
+	kill = 0;
 	foodBox.w = 20;
 	foodBox.h = 20;
 }
@@ -32,7 +32,7 @@ food::food(SDL_Event event, SDL_Surface* fishfood){
 	xVel = 0;
 	yVel = 5;
 
-	int kill = 0;
+	kill = 0;
 
 	image = fishfood;
 }
@@ -54,10 +54,6 @@ SDL_Surface* food::show(){
 	return image;
 }
 
-void food::destruct(){
-	kill = 1;
-}
-
 int food::getX(){
 	return x;
 }
@@ -65,3 +61,12 @@ int food::getX(){
 int food::getY(){
 	return y;
 }
+
+void food::execute(){
+        kill = 1;
+}
+
+int food::condemned(){
+        return (kill);
+}
+

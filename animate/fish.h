@@ -31,6 +31,10 @@ class fish{
 		SDL_Rect fishBox;
 		void set_clips();
 
+		//killing commands
+		void execute(); //this command terminates the fish
+		int condemned(); //returns a 1 if it needs to be killed
+
 	private:
 		// fish sizes
 		int fish_height;
@@ -46,7 +50,7 @@ class fish{
 		int frame;
 		int status;
 	
-
+		int kill;
 	
 		//pointer to the image
 		SDL_Surface* image;

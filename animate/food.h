@@ -24,10 +24,13 @@ class food{
 		food(SDL_Event, SDL_Surface*);
 		void move();
 		SDL_Surface* show();
-		void destruct();	
 
 		int getX();
 		int getY();
 
 		SDL_Rect foodBox;
+
+		//kill functions
+		void execute();
+		int condemned();
 };

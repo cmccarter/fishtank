@@ -252,11 +252,8 @@ int main(void){
 			BUBBLES[k]=BUBBLES[BUBBLES.size()-1];
 			BUBBLES.pop_back();
 			k--;
-			cout << "condemned!" << endl;
 		}
         }
-
-	cout << BUBBLES.size() << endl;
 
 	for(int j = 0; j < FISH.size(); j++){
 		//perform similar computation

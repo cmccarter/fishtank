@@ -35,6 +35,9 @@ fish::fish(){
 	// Hit box dimensions
 	fishBox.w = fish_width;
 	fishBox.h = fish_height;
+
+	//killing variable
+	kill = 0;
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
@@ -59,6 +62,8 @@ fish::fish(int a, int b, SDL_Surface* input){
 	fishBox.w = fish_width;
 	fishBox.h = fish_height;
 
+	//killing variable
+	kill = 0;
 }
 
 SDL_Surface* fish::show(){
@@ -149,3 +154,12 @@ void fish::set_clips(){
 	gurgleClip[2].w = 640;
 	gurgleClip[2].h = 480;
 }
+
+void fish::execute(){
+        kill = 1;
+}
+
+int fish::condemned(){
+        return (kill);
+}
+
