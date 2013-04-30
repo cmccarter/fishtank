@@ -1,12 +1,14 @@
-/* Dan McCormack
+/* Dan McCormack and Conor McCarter
 	3/28/2012
 	Lab 8: Deliverable
 	Animating Fish
 */
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <iostream> //added for debugging
 #include <string>
+#include <math.h>
 
 #include "fish.h"
 #include "food.h"
@@ -29,23 +31,32 @@ fish::fish(){
 	fish_width = 100;
 
 	// offsets for hit box
-	fishBox.y = 0;
-	fishBox.x = 0;
+//	fishBox.y = 0;
+//	fishBox.x = 0;
 
 	// Hit box dimensions
-	fishBox.w = fish_width;
-	fishBox.h = fish_height;
+//	fishBox.w = fish_width;
+//	fishBox.h = fish_height;
 
 	//killing variable
 	kill = 0;
+
+	//behavior control
+        pChangeDirectionX = 0;
+	pChangeDirectionY = 0;
+        maxChangeDirectionX = 500;
+	maxChangeDirectionY = 20;
+	maxSpeed = 15;
+	wanderTotalSpeed = 9;
+	avgHeight = 200;
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
 	x = a;
 	y = b;
 
-	xVel = 0;
-	yVel = 0;
+	xVel = 3;
+	yVel = 3;
 	offset = 0;
 
 	frame = 0;
@@ -55,15 +66,24 @@ fish::fish(int a, int b, SDL_Surface* input){
 	image = input;
 
 	// offsets for hit box
-	fishBox.y = 0;
-	fishBox.x = 0;
+//	fishBox.y = 0;
+//	fishBox.x = 0;
 
 	// Hit box dimensions
-	fishBox.w = fish_width;
-	fishBox.h = fish_height;
+//	fishBox.w = fish_width;
+//	fishBox.h = fish_height;
 
 	//killing variable
 	kill = 0;
+
+	//behavior control
+        pChangeDirectionX = 0;
+	pChangeDirectionY = 0;
+        maxChangeDirectionX = 500;
+	maxChangeDirectionY = 20;
+	maxSpeed = 15;
+	wanderTotalSpeed = 9;
+	avgHeight = 200;
 }
 
 SDL_Surface* fish::show(){
@@ -71,7 +91,7 @@ SDL_Surface* fish::show(){
 		if(frame >= 3){
 				frame = 0;
 		}
-		apply_rect(SCREEN_WIDTH - fish_width, SCREEN_HEIGHT - fish_height, fishtest, screen, &gurgleClip[frame]);
+//		apply_rect(SCREEN_WIDTH - fish_width, SCREEN_HEIGHT - fish_height, fishtest, screen, &gurgleClip[frame]);
        return image;
 }
 
@@ -103,14 +123,64 @@ void fish::handle_input(SDL_Event event){
 
 
 void fish::move(){
+       //look at the propensity to change direction and if we have a target
+        double totalVel = sqrt(pow(xVel,2)+pow(yVel,2));
+        if(targetX == -1 && targetY == -1) {
+                //wander
+		cout << "Wandering..." << endl;
+                pChangeDirectionX = pChangeDirectionX + 1;
+                if(x<20 & xVel < 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((20-x),2);
+                if(x+fish_width > 980 & xVel > 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((980-x),2);
+		
+
+		if (y > avgHeight + 20 || y < avgHeight - 20){
+			pChangeDirectionY = 0;
+			//force a change of direction if the fish is moving away from its average height
+			if (((y > avgHeight + 20)&&(yVel > 0))||((y < avgHeight - 20)&&(yVel < 0 ))){
+				pChangeDirectionY = 5000;
+			}
+			//but change the direction if the fish is headed the wrong way
+		}	
+
+		pChangeDirectionY = pChangeDirectionY + 1;
+		if(y<50 & yVel < 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((50-y),2);
+		if(y>550 & yVel > 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((550-y),2);
+
+        } else {
+                //follow the food
+		cout << "Found food..." << endl;
+                xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+		cout << "Following food! XVel, YVel : " << xVel << ", "<< yVel << endl;
+        }
+
+
+	if (pChangeDirectionX > maxChangeDirectionX){
+                xVel = -xVel;
+                pChangeDirectionX = 0;
+        }
+	if (pChangeDirectionY > maxChangeDirectionY){
+                yVel = -yVel;
+                pChangeDirectionY = 0;
+        }
+
+
+
+
 	//increment speed
 	x+=xVel;
 	y+=yVel;
-	fishBox.x = x;
-	fishBox.y = y;
+//	fishBox.x = x;
+//	fishBox.y = y;
 
-	if((x< 0) || (x + 2*fish_width > 1000)) xVel = -xVel;
-	if((y < 0) || (y + fish_height > 600)) yVel = -yVel;
+        if((x< 0) || (x + fish_width > 1000)){
+                xVel = -xVel;
+                pChangeDirectionX = 0;
+        }
+	if((y < 0) || (y + fish_height > 600)){
+                yVel = -yVel;
+                pChangeDirectionY = 0;
+        }
 
 }
 
@@ -137,6 +207,7 @@ void fish::setYvel(int yin){
 	return;
 }
 
+/*
 void fish::set_clips(){
 
 	gurgleClip[0].x = 0;
@@ -154,6 +225,7 @@ void fish::set_clips(){
 	gurgleClip[2].w = 640;
 	gurgleClip[2].h = 480;
 }
+*/
 
 void fish::execute(){
         kill = 1;
@@ -161,5 +233,47 @@ void fish::execute(){
 
 int fish::condemned(){
         return (kill);
+}
+
+void fish::setTargets(vector< food*> FOOD){
+	
+	cout << "Setting targets..." << endl;
+        //as of now, this block only looks for food
+        int closestDistance;
+        int closestElement;
+        //how far the fish should be able to sense food (x^2 + y^2)
+        int proximityAwareness = 500000;
+        int tempDistance = 0;
+
+        //find closest food
+        if (FOOD.size() == 0){
+                targetX = -1;
+                targetY = -1;
+        } else {
+                //just the farthest away possible
+                closestDistance = 2000000;
+                closestElement = -1;
+                for(int i = 0; i < FOOD.size(); i++){
+                        tempDistance = ((x - FOOD[i]->getX())*(x - FOOD[i]->getX())) + ((y - FOOD[i]->getY())*(y - FOOD[i]->getY()));
+                        if( tempDistance < closestDistance && tempDistance < proximityAwareness){
+                                closestElement = i;
+                                closestDistance = tempDistance;
+                        }
+                }
+		cout << "Closest Element: " << closestElement << endl;
+		cout << "Closest Distance: " << closestDistance <<  endl;
+                if(closestElement == -1){
+                        targetX = -1;
+                        targetY = -1;
+                } else {
+                        targetX = FOOD[closestElement]->getX();
+                        targetY = FOOD[closestElement]->getY();
+                }
+        }
+
+	cout << "Target X: " << targetX << endl;
+	cout << "Target Y: " << targetY << endl;
+
+	return;
 }
 

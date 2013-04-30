@@ -2,6 +2,9 @@
 #include "SDL/SDL_image.h"
 #include <string>
 
+#ifndef FOOD_H
+#define FOOD_H
+
 using namespace std;
 
 // define class
@@ -18,6 +21,12 @@ class food{
 		//order to delete this object
 		int kill;
 		SDL_Surface* image;
+
+		//old food
+		int age;
+		int maxAge;
+
+		int xStart;
 	
 	public:
 		food();
@@ -34,3 +43,5 @@ class food{
 		void execute();
 		int condemned();
 };
+
+#endif

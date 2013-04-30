@@ -10,11 +10,12 @@
 #include "global.h"
 
 using namespace std;
+
 //screen attributes
 	const int SCREEN_WIDTH = 1000;
 	const int SCREEN_HEIGHT = 600;
 	const int SCREEN_BPP = 32;
-	 SDL_Rect gurgleClip[3];
+//	 SDL_Rect gurgleClip[3];
 	//frames per second
 	const int FRAMES_PER_SECOND = 30;
 
@@ -28,7 +29,6 @@ using namespace std;
 	SDL_Rect tank;
 	SDL_Surface* fishtest = NULL;
 	// Rect for sprite sheeet clips
-	
 
 int main(void){
 
@@ -75,8 +75,8 @@ int main(void){
 	cout << "Loading fishfood image." << endl;
 	SDL_Surface* fishfood = IMG_Load("images/small_food.png");
 	cout << "Loading first fish." << endl;	
-	fishtest = IMG_Load("images/gurgle_sprite.png");
-	cout << "Load the bubbles!." << endl;
+	fishtest = IMG_Load("images/bubbles_small_sample.png");
+	cout << "Load the bubbles!" << endl;
 	SDL_Surface* medium_bubblepic = IMG_Load("images/medium_bubble.png"); //use bubble for test
 	SDL_Surface* small_bubblepic = IMG_Load("images/small_bubble.png"); //use bubble for test
 	
@@ -148,26 +148,6 @@ int main(void){
 			{
 				//on right click, make new fish food
 				FOOD.push_back(new food(event, fishfood));
-
-				// for each fish, send towards food
-				for(int i = 0; i < FISH.size(); i++){ // if fish behind food, go towards food
-					if(FISH[i]->getX() > FOOD[0]->getX() || FISH[i]->getY() > FOOD[0]->getY()){
-						FISH[i]->setXvel(-FOOD[0]->getX() / 60);
-						FISH[i]->setYvel(-FOOD[0]->getY() / 60);
-
-					}
-					else{ // if fish is in front of food, turn around
-						FISH[i]->setXvel(FOOD[0]->getX() / 120);
-						FISH[i]->setYvel(FOOD[0]->getY() / 120);	
-					}
-					/*if(check_collision(FOOD.back()->foodBox, FISH[i]->fishBox)){
-						FISH[i]->setXvel(0);
-						FISH[i]->setYvel(0);
-						FOOD.pop_back();
-
-					}*/
-						
-				}
 			}
 			else if (event.button.button == SDL_BUTTON_LEFT )
 			{
@@ -183,6 +163,12 @@ int main(void){
 			}
 		}
 	}
+/*---------------------MAIN LOOP: FISH ALGORITHM--------- */
+
+        //for each fish, determine where it is headed (not actually changing x or y)
+        for(int j = 0; j < FISH.size(); j++){
+                FISH[j]->setTargets(FOOD);
+        }
 
 /* ---------------------MAIN LOOP: LOGIC ---------------- */
 	//move functions for each object
@@ -214,7 +200,6 @@ int main(void){
 	for(int K = 0; K< BUBBLES.size(); K++){
 		apply_surface(BUBBLES[K]->getX(),BUBBLES[K]->getY(),BUBBLES[K]->show(),screen);
 	}
-	
 
 	//this updates the screen
 	if( SDL_Flip (screen) == -1)
@@ -234,7 +219,7 @@ int main(void){
 	}
 
 //implement killing in food
-/*
+
 	//check for element killing (Conor will explain)
 	for(int i = 0; i < FOOD.size(); i++){
 		if(FOOD[i]->condemned()){
@@ -244,7 +229,7 @@ int main(void){
 			i--;
 		}
 	}
-*/
+
 
 	for(int k = 0; k < BUBBLES.size(); k++){
 		if(BUBBLES[k]->condemned()){
@@ -259,8 +244,8 @@ int main(void){
 		//perform similar computation
 	}
 
+	
 	}
-
 /* -------------------END MAIN LOOP------------------------ */
 	//cleanup here if needed
 	return 0;

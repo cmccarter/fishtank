@@ -1,16 +1,11 @@
-/* Dan McCormack
-	3/28/2013
-	Lab 8: Deliverable 
-	Header file to have object move
-*/
-
-// Headers
-
 #ifndef FISH_H
 #define FISH_H
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
+#include <vector>
+#include "food.h"
 
 using namespace std;
 
@@ -28,14 +23,31 @@ class fish{
 		int getY();
 		void setYvel(int);
 		void setXvel(int);
-		SDL_Rect fishBox;
-		void set_clips();
+//		SDL_Rect fishBox;
+//		void set_clips();
+
+		//behavior control
+                void setTargets(vector<food*>);
+
 
 		//killing commands
 		void execute(); //this command terminates the fish
 		int condemned(); //returns a 1 if it needs to be killed
 
 	private:
+               //behavior controls
+                int pChangeDirectionY;
+		int pChangeDirectionX;
+                int maxChangeDirectionY;
+		int maxChangeDirectionX;
+		int maxSpeed;
+		double wanderTotalSpeed;
+		int avgHeight;
+
+                //where the fish is swimming towards, -1 means it is just wandering
+                int targetX;
+                int targetY;
+
 		// fish sizes
 		int fish_height;
 		int fish_width;
@@ -43,8 +55,8 @@ class fish{
 		int x;
 		int y;
 		// Velocity of fish
-		int xVel;
-		int yVel;
+		double xVel;
+		double yVel;
 		int offset;
 		
 		int frame;
