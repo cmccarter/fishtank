@@ -75,7 +75,7 @@ int main(void){
 	cout << "Loading fishfood image." << endl;
 	SDL_Surface* fishfood = IMG_Load("images/small_food.png");
 	cout << "Loading first fish." << endl;	
-	fishtest = IMG_Load("images/bubbles_small_sample.png");
+	fishtest = IMG_Load("images/gurgle.png");
 	cout << "Load the bubbles!" << endl;
 	SDL_Surface* medium_bubblepic = IMG_Load("images/medium_bubble.png"); //use bubble for test
 	SDL_Surface* small_bubblepic = IMG_Load("images/small_bubble.png"); //use bubble for test

@@ -24,11 +24,11 @@ class fish{
 		void setYvel(int);
 		void setXvel(int);
 //		SDL_Rect fishBox;
-//		void set_clips();
+		void set_clips();
 
 		//behavior control
                 void setTargets(vector<food*>);
-
+        SDL_Rect gurgleClip[20];
 
 		//killing commands
 		void execute(); //this command terminates the fish
