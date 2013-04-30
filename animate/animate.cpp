@@ -172,8 +172,21 @@ int main(void){
 
 /* ---------------------MAIN LOOP: LOGIC ---------------- */
 	//move functions for each object
-	for(int i = 0; i < FOOD.size(); i++){
-		FOOD[i]->move();
+        for(int i = 0; i < FOOD.size(); i++){
+                FOOD[i]->move();
+                int fox = FOOD[i]->getX();
+                int foy = FOOD[i]->getY();
+                cout << "food x  = " << fox << endl;
+                cout << "food y  = " << foy << endl;
+                for(int j = 0; j < FISH.size(); j++){
+                        int fix = (FISH[j]->getX() + 600);
+                        int fiy = FISH[j]->getY() + 275;
+                        cout << "fish x  = " << fix << endl;
+                        cout << "fish y  = " << fiy << endl;
+                        if(((fix + 25 >= fox) && (fix -25 <= fox)) && ((fiy +25 >= foy)&&(fiy -25 <= foy)))
+                                {FOOD[i]->execute();
+                                }
+        }
 	}
 
 	for(int j = 0; j < FISH.size(); j++){
@@ -220,7 +233,7 @@ int main(void){
 
 //implement killing in food
 
-	//check for element killing (Conor will explain)
+	//check for element killing 
 	for(int i = 0; i < FOOD.size(); i++){
 		if(FOOD[i]->condemned()){
 			delete FOOD[i];
