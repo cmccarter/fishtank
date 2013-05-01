@@ -392,13 +392,13 @@ double getDistance(fish* fish1, fish* fish2){
 void checkCollision(vector<fish*> FISH){
 //	int temp;
 	for(int r = 0; r < FISH.size(); r++){
-		for(int ISO = 0; ISO < FISH.size()-1; ISO++){
+		for(int ISO = 1; ISO < FISH.size()-1; ISO++){
 			if(r == ISO) continue;
-			if(getDistance(FISH[r], FISH[ISO]) < 100 ){
+			if(getDistance(FISH[r], FISH[ISO]) < 150 ){
 		//	temp = FISH[1]->getXvel();
 			FISH[r]->setXvel(-FISH[r]->getXvel());
 			FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
-			//FISH[r]->setYvel(10);
+			//FISH[r]->setAvgHeight(300);
 		//	FISH[r]->move();
 		//	FISH[ISO]->move();
 			} 

@@ -315,3 +315,8 @@ int fish::getXvel(){
 int fish::getYvel(){
 	return yVel;
 }
+
+void fish::setAvgHeight(int i){
+	avgHeight = i;
+	return;
+}

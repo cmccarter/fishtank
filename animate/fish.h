@@ -35,6 +35,7 @@ class fish{
 		//killing commands
 		void execute(); //this command terminates the fish
 		int condemned(); //returns a 1 if it needs to be killed
+		void setAvgHeight(int);
 	private:
                //behavior controls
                 int pChangeDirectionY;
