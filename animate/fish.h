@@ -64,7 +64,6 @@ class fish{
 		int status;
 	
 		int kill;
-	
 		//pointer to the image
 		SDL_Surface* image;
 };

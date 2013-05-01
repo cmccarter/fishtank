@@ -94,6 +94,7 @@ int main(void){
 
 	//initializes fish
 	FISH.push_back(new fish(100, 100, fishtest));
+	FISH.push_back(new fish(400, 400, fishtest));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;
@@ -222,7 +223,6 @@ int main(void){
 	}
 
 	//increment frame counter
-	frame++;
 
 	//if we want to cap the frame rate
 	if( ( cap == true ) && (fps.get_ticks() < 1000 / FRAMES_PER_SECOND ) )

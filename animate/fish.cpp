@@ -137,6 +137,7 @@ void fish::handle_input(SDL_Event event){
 void fish::move(){
        //look at the propensity to change direction and if we have a target
         double totalVel = sqrt(pow(xVel,2)+pow(yVel,2));
+        cout << "Total Velocity: " << totalVel << endl << endl;
 if (turnStatus == 0){
         if(targetX == -1 && targetY == -1) {
                 //wander
@@ -162,10 +163,16 @@ if (turnStatus == 0){
         } else {
                 //follow the food
 		cout << "Found food..." << endl;
-                if (targetX-x == 0) xVel = xVel;
-		else xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
-                if (targetY-y == 0) yVel = yVel;
-		else yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                if (targetX-x <= 0) xVel = 1;
+         		if (sqrt(pow(targetX-x, 2) + pow(targetY - y, 2)) < 2){
+         			xVel = 4;
+         			yVel = 4;
+     			}	
+     			else xVel = (targetX - x) / 12;
+		//else xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                if (targetY-y == 0) yVel = 1;
+		//else yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                else yVel = (targetY - y) / 12;
 		cout << "Following food! XVel, YVel : " << xVel << ", "<< yVel << endl;
         }
 
@@ -185,10 +192,9 @@ if (turnStatus == 0){
 
 
 	//increment speed
-	if ((targetX != -1)&&(targetY != -1)&&(targetX-x==0)) x = x;
-	else x+=xVel;
-	if ((targetX != -1)&&(targetY != -1)&&(targetY-y==0)) y = y;
-	else y+=yVel;
+
+	 x+=xVel;
+	 y+=yVel;
 //	fishBox.x = x;
 //	fishBox.y = y;
 
