@@ -14,6 +14,8 @@
 #include "food.h"
 #include "global.h"
 
+//creates a vector to store all food items being shown at once
+vector< food* > FOOD;
 
 fish::fish(){
 	// Initialize offsets
@@ -134,7 +136,7 @@ void fish::handle_input(SDL_Event event){
 
 
 
-void fish::move(){
+void fish::move(vector< food*> FOOD){
        //look at the propensity to change direction and if we have a target
         double totalVel = sqrt(pow(xVel,2)+pow(yVel,2));
         cout << "Total Velocity: " << totalVel << endl << endl;
@@ -188,6 +190,26 @@ if (turnStatus == 0){
 		turnStatus = 0;
         }
 
+//collision with food detection
+        cout << "food size " << FOOD.size() << endl;
+        for(int i = 0; i < FOOD.size(); i++){
+                int fox = FOOD[i]->getX();
+                int foy = FOOD[i]->getY();
+                        int fix = getX();
+                        int fiy = getY() + 50;
+                if(xVel >=0)
+                        {fix += 75;
+                        if(((fix +25 >= fox) && (fix -25 <= fox)) && ((fiy +10 >= foy)&&(fiy -10 <= foy)))
+				{FOOD[i]->execute();
+                                }
+                        }
+                else
+                    	{if(((fix +25 >= fox) && (fix -25 <= fox)) && ((fiy +10 foy)&&(fiy -10 <= foy)))
+                                {FOOD[i]->execute();
+                                }
+                        }
+        }
+
 
 
 
@@ -222,11 +244,11 @@ bool fish::iWasClicked(SDL_Event event){
 }
 
 int fish::getX(){
-	return x;
+	return x - 20;
 }
 
 int fish::getY(){
-	return y;
+	return y - 70;
 }
 
 void fish::setXvel(int xin){
@@ -297,8 +319,8 @@ void fish::setTargets(vector< food*> FOOD){
                         targetX = -1;
                         targetY = -1;
                 } else {
-                        targetX = FOOD[closestElement]->getX();
-                        targetY = FOOD[closestElement]->getY();
+                        targetX = FOOD[closestElement]->getX()-45;
+                        targetY = FOOD[closestElement]->getY()+40;
                 }
         }
 

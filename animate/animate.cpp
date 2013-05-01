@@ -196,7 +196,7 @@ int main(void){
 
 	for(int j = 0; j < FISH.size(); j++){
 		checkCollision(FISH);
-		FISH[j]->move();
+		FISH[j]->move(FOOD);
 	}
 
 	for(int k = 0; k < BUBBLES.size(); k++){
