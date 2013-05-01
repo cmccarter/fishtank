@@ -130,9 +130,11 @@ int main(void){
 				//quit on next loop
 				quit = true;
 			}
+			//if the spacebar is pressed
 			else if (event.key.keysym.sym == SDLK_SPACE)
 			{
-				if(mouseEvent.button.x > 20 && mouseEvent.button.x < 900 && mouseEvent.button.y > 20 && mouseEvent.button.y < 420){
+				//if the mouse is in an appropriate area
+				if(mouseEvent.button.x > 90 && mouseEvent.button.x < 910 && mouseEvent.button.y > 10 && mouseEvent.button.y < 420){
 					//make a fish
 					switch(rand()%3)
 					{
@@ -175,7 +177,9 @@ int main(void){
 			if(event.button.button == SDL_BUTTON_RIGHT )
 			{
 				//on right click, make new fish food
-				FOOD.push_back(new food(event, fishfood));
+				if(event.button.x > 20 && event.button.x < 900 && event.button.y > 20 && event.button.y < 420){
+					FOOD.push_back(new food(event, fishfood));
+				}
 			}
 			else if (event.button.button == SDL_BUTTON_LEFT )
 			{

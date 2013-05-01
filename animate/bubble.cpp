@@ -24,7 +24,7 @@ bubble::bubble(){
 
 bubble::bubble(SDL_Event event, SDL_Surface* bubblepic){
 	x = event.button.x;
-	y = event.button.y;
+	y = event.button.y + 3 - rand()%5;
 	
 	xStart = x;
 
