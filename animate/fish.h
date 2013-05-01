@@ -43,6 +43,7 @@ class fish{
 		int maxSpeed;
 		double wanderTotalSpeed;
 		int avgHeight;
+		int turnStatus;
 
                 //where the fish is swimming towards, -1 means it is just wandering
                 int targetX;

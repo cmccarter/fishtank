@@ -49,6 +49,7 @@ fish::fish(){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
+	turnStatus = 0;
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
@@ -84,6 +85,7 @@ fish::fish(int a, int b, SDL_Surface* input){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
+	turnStatus = 0;
 }
 
 SDL_Surface* fish::show(){
@@ -125,6 +127,7 @@ void fish::handle_input(SDL_Event event){
 void fish::move(){
        //look at the propensity to change direction and if we have a target
         double totalVel = sqrt(pow(xVel,2)+pow(yVel,2));
+if (turnStatus == 0){
         if(targetX == -1 && targetY == -1) {
                 //wander
 		cout << "Wandering..." << endl;
@@ -149,8 +152,10 @@ void fish::move(){
         } else {
                 //follow the food
 		cout << "Found food..." << endl;
-                xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
-                yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                if (targetX-x == 0) xVel = 0;
+		else xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
+                if (targetY-y == 0) yVel = 0;
+		else yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
 		cout << "Following food! XVel, YVel : " << xVel << ", "<< yVel << endl;
         }
 
@@ -158,10 +163,12 @@ void fish::move(){
 	if (pChangeDirectionX > maxChangeDirectionX){
                 xVel = -xVel;
                 pChangeDirectionX = 0;
+		turnStatus = 1;
         }
 	if (pChangeDirectionY > maxChangeDirectionY){
                 yVel = -yVel;
                 pChangeDirectionY = 0;
+		turnStatus = 0;
         }
 
 
@@ -181,6 +188,13 @@ void fish::move(){
                 yVel = -yVel;
                 pChangeDirectionY = 0;
         }
+}else{
+	turnStatus = turnStatus + 1;
+	//7 is the pixel amount
+	if (turnStatus == 7){
+		turnStatus = 0;
+	}
+}
 
 }
 
