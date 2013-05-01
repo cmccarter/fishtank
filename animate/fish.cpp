@@ -55,7 +55,7 @@ fish::fish(){
 	set_clips();
 }
 
-fish::fish(int a, int b, SDL_Surface* input){
+fish::fish(int a, int b, SDL_Surface* input, int fh, int fw){
 	x = a;
 	y = b;
 
@@ -64,8 +64,8 @@ fish::fish(int a, int b, SDL_Surface* input){
 	offset = 0;
 
 	frame = 0;
-	fish_height = 80;
-	fish_width = 107;
+	fish_height = fh;
+	fish_width = fw;
 
 	image = input;
 	//srand (time(NULL));
@@ -148,7 +148,7 @@ if (turnStatus == 0){
         if(targetX == -1 && targetY == -1) {
                 //wander
 		cout << "Wandering..." << endl;
-                pChangeDirectionX = pChangeDirectionX + 1;
+                pChangeDirectionX = pChangeDirectionX + 1 + rand()%20;
                 if(x<20 && xVel < 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((20-x),2);
                 if(x+fish_width > 980 && xVel > 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((980-x),2);
 
@@ -170,10 +170,10 @@ if (turnStatus == 0){
 			//but change the direction if the fish is headed the wrong way
 		}	
 
-		pChangeDirectionY = pChangeDirectionY + 1;
-		if(y<50 && yVel < 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((50-y),2);
+		pChangeDirectionY = pChangeDirectionY + rand()%2;
+/*		if(y<50 && yVel < 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((50-y),2);
 		if(y>550 && yVel > 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((550-y),2);
-
+*/
         } else {
                 //follow the food
 		cout << "Found food..." << endl;
@@ -280,16 +280,16 @@ void fish::set_clips(){
 
 	for(int i = 0; i < 20; i++){
 		gurgleClip[i].x = 0;
-		gurgleClip[i].y = 80*i;
-		gurgleClip[i].w = 107;
-		gurgleClip[i].h = 80;
+		gurgleClip[i].y = fish_height*i;
+		gurgleClip[i].w = fish_width;
+		gurgleClip[i].h = fish_height;
 	}
 
 	for(int j = 20; j < 40; j++){
-		gurgleClip[j].x = 107;
-		gurgleClip[j].y = 80*(j-20);
-		gurgleClip[j].w = 107;
-		gurgleClip[j].h = 80;
+		gurgleClip[j].x = fish_width;
+		gurgleClip[j].y = fish_height*(j-20);
+		gurgleClip[j].w = fish_width;
+		gurgleClip[j].h = fish_height;
 	}
 }
 
