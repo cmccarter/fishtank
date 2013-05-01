@@ -48,11 +48,8 @@ fish::fish(){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
-<<<<<<< HEAD
 	turnStatus = 0;
-=======
 	set_clips();
->>>>>>> a52f6e615b0df319e0528e91b71951fd0008d690
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
@@ -88,11 +85,8 @@ fish::fish(int a, int b, SDL_Surface* input){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
-<<<<<<< HEAD
 	turnStatus = 0;
-=======
 	set_clips();
->>>>>>> a52f6e615b0df319e0528e91b71951fd0008d690
 }
 
 SDL_Surface* fish::show(){
@@ -168,9 +162,9 @@ if (turnStatus == 0){
         } else {
                 //follow the food
 		cout << "Found food..." << endl;
-                if (targetX-x == 0) xVel = 0;
+                if (targetX-x == 0) xVel = xVel;
 		else xVel = (targetX-x)/fabs(targetX-x)*sqrt(pow(totalVel,2)*(pow((targetX - x),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
-                if (targetY-y == 0) yVel = 0;
+                if (targetY-y == 0) yVel = yVel;
 		else yVel = (targetY-y)/fabs(targetY-y)*sqrt(pow(totalVel,2)*(pow((targetY - y),2)/(pow((targetX - x),2)+pow((targetY - y),2))));
 		cout << "Following food! XVel, YVel : " << xVel << ", "<< yVel << endl;
         }
@@ -191,8 +185,10 @@ if (turnStatus == 0){
 
 
 	//increment speed
-	x+=xVel;
-	y+=yVel;
+	if ((targetX != -1)&&(targetY != -1)&&(targetX-x==0)) x = x;
+	else x+=xVel;
+	if ((targetX != -1)&&(targetY != -1)&&(targetY-y==0)) y = y;
+	else y+=yVel;
 //	fishBox.x = x;
 //	fishBox.y = y;
 
