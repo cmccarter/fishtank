@@ -15,7 +15,7 @@ class fish{
 		fish(); // Constructor
 		fish(int, int, SDL_Surface*); // non default constructor 
 		void handle_input(SDL_Event); // takes input
-		void move(); // moves fish
+		void move(vector<food*>); // moves fish
 		SDL_Surface* show(); // displays fish on screen
 		bool iWasClicked(SDL_Event); // returns true if click was on fish
 
