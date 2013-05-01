@@ -29,6 +29,8 @@ extern 	SDL_Event event;
 	// Rect for tank constraints
 extern 	SDL_Rect tank;
 extern 	SDL_Surface* fishtest;
+extern SDL_Surface* silverfish;
+extern SDL_Surface* goldfish;
 	// Rect for sprite sheeet clips
 	
 #endif 

@@ -29,6 +29,8 @@ using namespace std;
 	// Rect for tank constraints
 	SDL_Rect tank;
 	SDL_Surface* fishtest = NULL;
+	SDL_Surface* silverfish = NULL;
+	SDL_Surface* goldfish = NULL;
 	// Rect for sprite sheeet clips
 
 int main(void){
@@ -77,6 +79,8 @@ int main(void){
 	SDL_Surface* fishfood = IMG_Load("images/small_food.png");
 	cout << "Loading first fish." << endl;	
 	fishtest = IMG_Load("images/gurgleShrunk.png");
+	goldfish = IMG_Load("images/goldfish.png");
+	silverfish = IMG_Load("images/silverfish.png");
 	cout << "Load the bubbles!" << endl;
 	SDL_Surface* medium_bubblepic = IMG_Load("images/medium_bubble.png"); //use bubble for test
 	SDL_Surface* small_bubblepic = IMG_Load("images/small_bubble.png"); //use bubble for test
@@ -95,8 +99,8 @@ int main(void){
 
 	//initializes fish
 	FISH.push_back(new fish(100, 100, fishtest));
-	FISH.push_back(new fish(400, 400, fishtest));
-	FISH.push_back(new fish(800, 400, fishtest));
+	FISH.push_back(new fish(400, 400, goldfish));
+	FISH.push_back(new fish(800, 400, silverfish));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;

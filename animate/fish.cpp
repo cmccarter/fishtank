@@ -102,10 +102,12 @@ SDL_Surface* fish::show(){
 		offset.x = getX();
 		offset.y = getY();
 		if(xVel >= 0){
-			SDL_BlitSurface(fishtest, &gurgleClip[frame], screen, &offset);
+			cout << "before..." << endl;
+			SDL_BlitSurface(image, &gurgleClip[frame], screen, &offset);
+			cout << "after..." << endl;
 		}
 		if(xVel < 0){
-			SDL_BlitSurface(fishtest, &gurgleClip[frame+20], screen, &offset);
+			SDL_BlitSurface(image, &gurgleClip[frame+20], screen, &offset);
 		}
 
 
