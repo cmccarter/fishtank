@@ -396,16 +396,16 @@ void checkCollision(vector<fish*> FISH){
 	for(int r = 0; r < FISH.size()-1; r++){
 		for(int ISO = r+1; ISO < FISH.size(); ISO++){
 			if(r == ISO) continue;
-			if(getDistance(FISH[r], FISH[ISO]) < 150  && abs(FISH[r]->getXvel() + FISH[ISO]->getXvel()) > abs(FISH[r]->getXvel()) && (abs(FISH[r]->getY() - FISH[ISO]->getY()) < 10 )){
+			if(getDistance(FISH[r], FISH[ISO]) < 150  && abs(FISH[r]->getXvel() + FISH[ISO]->getXvel()) > abs(FISH[r]->getXvel()) && (abs(FISH[r]->getY() - FISH[ISO]->getY()) < 40 )){
 				cout << "Collision Detected" << endl;
 		//	temp = FISH[1]->getXvel();
 			//SDL_Delay(10);
-			FISH[r]->setXvel(FISH[r]->getXvel());
+			FISH[r]->setXvel(-FISH[r]->getXvel() - rand()%3);
 		//	FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
 		//	FISH[r]->setAvgHeight(300);
 		//	FISH[r]->move();
 		//	FISH[ISO]->move();
-			cout << "Y diff b/w fish 1 and 2: " << abs(FISH[r]->getY() - FISH[ISO]->getY()) << endl;
+			//cout << "Y diff b/w fish 1 and 2: " << abs(FISH[r]->getY() - FISH[ISO]->getY()) << endl;
 			}
 
 		}

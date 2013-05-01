@@ -23,8 +23,8 @@ class fish{
 		int getY();
 		int getXvel();
 		int getYvel();
-		void setYvel(int);
-		void setXvel(int);
+		void setYvel(double);
+		void setXvel(double);
 //		SDL_Rect fishBox;
 		void set_clips();
 

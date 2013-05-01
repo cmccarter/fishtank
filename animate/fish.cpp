@@ -84,7 +84,7 @@ fish::fish(int a, int b, SDL_Surface* input){
 	pChangeDirectionY = 0;
     maxChangeDirectionX = 500;
 	maxChangeDirectionY = 20;
-	maxSpeed = 15;
+	maxSpeed = 8;
 	wanderTotalSpeed = 9;
 	avgHeight = 100 + rand()%220;
 	turnStatus = 0;
@@ -147,7 +147,12 @@ if (turnStatus == 0){
                 pChangeDirectionX = pChangeDirectionX + 1;
                 if(x<20 && xVel < 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((20-x),2);
                 if(x+fish_width > 980 && xVel > 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((980-x),2);
-		//xVel = xVel + ((1-rand()%3) / 10);
+
+		xVel = xVel + ((1-rand()%3) / 1);
+		if (xVel > maxSpeed) xVel = xVel - (rand()%3)/1;
+		if (xVel < 2 && xVel >= 0) xVel = xVel + (rand()%3)/1;
+		if (xVel < -maxSpeed) xVel = xVel + (rand()%3)/1;
+		if (xVel > -2 && xVel <= 0) xVel = xVel - (rand()%3)/1;
 
 		if (y > avgHeight + 20 || y < avgHeight - 20){
 			cout << "Out of average bounds." << endl;
@@ -236,12 +241,12 @@ int fish::getY(){
 	return y;
 }
 
-void fish::setXvel(int xin){
+void fish::setXvel(double xin){
 	xVel = xin;
 	return;
 }
 
-void fish::setYvel(int yin){
+void fish::setYvel(double yin){
 	yVel = yin;
 	return;
 }
