@@ -25,7 +25,7 @@ using namespace std;
 
 	//prepare for possible event
 	SDL_Event event;
-
+	SDL_Event mouseEvent;
 	// Rect for tank constraints
 	SDL_Rect tank;
 	SDL_Surface* fishtest = NULL;
@@ -118,6 +118,9 @@ int main(void){
 	//while there are no events to handle
 	while ( SDL_PollEvent( &event) )
 	{
+		if (event.type == SDL_MOUSEMOTION){
+			mouseEvent = event;
+		}
 		//if a key was pressed
 		if( event.type == SDL_KEYDOWN )
 		{
@@ -127,9 +130,27 @@ int main(void){
 				//quit on next loop
 				quit = true;
 			}
+			else if (event.key.keysym.sym == SDLK_SPACE)
+			{
+				if(mouseEvent.button.x > 20 && mouseEvent.button.x < 900 && mouseEvent.button.y > 20 && mouseEvent.button.y < 420){
+					//make a fish
+					switch(rand()%3)
+					{
+						case 0: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest));
+							break;
+						case 1: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, goldfish));
+							break;
+						case 2: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, silverfish));
+							break;
+						default: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest));
+							break;
+					}
+
+				}
+			}
 			else
 			{
-				//if it was not a 'q', pass to the active fish to interpret
+				//if it was not a 'q' or 'SPACE', pass to the active fish to interpret
 				if(active_fish >= 0 && active_fish < FISH.size() ){
 					FISH[active_fish]->handle_input(event);
 				}
