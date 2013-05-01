@@ -95,7 +95,12 @@ SDL_Surface* fish::show(){
 		SDL_Rect offset;
 		offset.x = getX();
 		offset.y = getY();
-		SDL_BlitSurface(fishtest, &gurgleClip[frame], screen, &offset);
+		if(xVel >= 0){
+			SDL_BlitSurface(fishtest, &gurgleClip[frame], screen, &offset);
+		}
+		if(xVel < 0){
+			SDL_BlitSurface(fishtest, &gurgleClip[frame+20], screen, &offset);
+		}
 
 
 }
@@ -217,9 +222,16 @@ void fish::set_clips(){
 
 	for(int i = 0; i < 20; i++){
 		gurgleClip[i].x = 0;
-		gurgleClip[i].y = 480*i;
-		gurgleClip[i].w = 640;
-		gurgleClip[i].h = 480;
+		gurgleClip[i].y = 80*i;
+		gurgleClip[i].w = 107;
+		gurgleClip[i].h = 80;
+	}
+
+	for(int j = 20; j < 40; j++){
+		gurgleClip[j].x = 107;
+		gurgleClip[j].y = 80*(j-20);
+		gurgleClip[j].w = 107;
+		gurgleClip[j].h = 80;
 	}
 }
 

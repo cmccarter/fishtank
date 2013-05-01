@@ -28,7 +28,7 @@ class fish{
 
 		//behavior control
                 void setTargets(vector<food*>);
-        SDL_Rect gurgleClip[20];
+        SDL_Rect gurgleClip[40];
 
 		//killing commands
 		void execute(); //this command terminates the fish
