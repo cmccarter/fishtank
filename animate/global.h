@@ -18,7 +18,6 @@ using namespace std;
 extern 	const int SCREEN_WIDTH;
 extern 	const int SCREEN_HEIGHT;
 extern 	const int SCREEN_BPP;
-extern 	 SDL_Rect gurgleClip[3];
 	//frames per second
 extern 	const int FRAMES_PER_SECOND;
 	//surfaces 

@@ -15,7 +15,6 @@
 #include "global.h"
 
 
-extern SDL_Rect gurgleClip[3];
 fish::fish(){
 	// Initialize offsets
 	x = 0;
@@ -49,7 +48,11 @@ fish::fish(){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
+<<<<<<< HEAD
 	turnStatus = 0;
+=======
+	set_clips();
+>>>>>>> a52f6e615b0df319e0528e91b71951fd0008d690
 }
 
 fish::fish(int a, int b, SDL_Surface* input){
@@ -85,16 +88,29 @@ fish::fish(int a, int b, SDL_Surface* input){
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
 	avgHeight = 200;
+<<<<<<< HEAD
 	turnStatus = 0;
+=======
+	set_clips();
+>>>>>>> a52f6e615b0df319e0528e91b71951fd0008d690
 }
 
 SDL_Surface* fish::show(){
 		frame++;
-		if(frame >= 3){
+		if(frame >= 20){
 				frame = 0;
 		}
-//		apply_rect(SCREEN_WIDTH - fish_width, SCREEN_HEIGHT - fish_height, fishtest, screen, &gurgleClip[frame]);
-       return image;
+		SDL_Rect offset;
+		offset.x = getX();
+		offset.y = getY();
+		if(xVel >= 0){
+			SDL_BlitSurface(fishtest, &gurgleClip[frame], screen, &offset);
+		}
+		if(xVel < 0){
+			SDL_BlitSurface(fishtest, &gurgleClip[frame+20], screen, &offset);
+		}
+
+
 }
 
 void fish::handle_input(SDL_Event event){
@@ -221,25 +237,24 @@ void fish::setYvel(int yin){
 	return;
 }
 
-/*
+
 void fish::set_clips(){
 
-	gurgleClip[0].x = 0;
-	gurgleClip[0].y = 0;
-	gurgleClip[0].w = 640;
-	gurgleClip[0].h = 480;
+	for(int i = 0; i < 20; i++){
+		gurgleClip[i].x = 0;
+		gurgleClip[i].y = 80*i;
+		gurgleClip[i].w = 107;
+		gurgleClip[i].h = 80;
+	}
 
-	gurgleClip[1].x = 0;
-	gurgleClip[1].y = 480;
-	gurgleClip[1].w = 640;
-	gurgleClip[1].h = 480;
-
-	gurgleClip[2].x = 0;
-	gurgleClip[2].y = 480*2;
-	gurgleClip[2].w = 640;
-	gurgleClip[2].h = 480;
+	for(int j = 20; j < 40; j++){
+		gurgleClip[j].x = 107;
+		gurgleClip[j].y = 80*(j-20);
+		gurgleClip[j].w = 107;
+		gurgleClip[j].h = 80;
+	}
 }
-*/
+
 
 void fish::execute(){
         kill = 1;
