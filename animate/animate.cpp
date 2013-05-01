@@ -31,6 +31,7 @@ using namespace std;
 	SDL_Surface* fishtest = NULL;
 	SDL_Surface* silverfish = NULL;
 	SDL_Surface* goldfish = NULL;
+
 	// Rect for sprite sheeet clips
 
 int main(void){
@@ -42,7 +43,9 @@ int main(void){
 		cout << "Initialization failed." << endl;
 		return 1;
 	}
-
+SDL_Rect fish1;
+fish1.y = 80;
+fish1.x = 107;
 	//the quit master flag
 	bool quit = false;
 
@@ -98,9 +101,9 @@ int main(void){
 	vector< bubble* > BUBBLES;
 
 	//initializes fish
-	FISH.push_back(new fish(100, 100, fishtest));
-	FISH.push_back(new fish(400, 400, goldfish));
-	FISH.push_back(new fish(800, 400, silverfish));
+	FISH.push_back(new fish(100, 100, fishtest, 80, 107));
+	FISH.push_back(new fish(400, 400, goldfish, 80, 107));
+	FISH.push_back(new fish(800, 400, silverfish, 80, 107));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;
@@ -138,13 +141,13 @@ int main(void){
 					//make a fish
 					switch(rand()%3)
 					{
-						case 0: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest));
+						case 0: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest, fish1.y, fish1.x));
 							break;
-						case 1: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, goldfish));
+						case 1: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, goldfish, fish1.y, fish1.x));
 							break;
-						case 2: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, silverfish));
+						case 2: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, silverfish, fish1.y, fish1.x));
 							break;
-						default: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest));
+						default: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest, fish1.y, fish1.x));
 							break;
 					}
 
@@ -199,7 +202,7 @@ int main(void){
 
         //for each fish, determine where it is headed (not actually changing x or y)
         for(int j = 0; j < FISH.size(); j++){
-        	                checkCollision(FISH);
+        	             //   checkCollision(FISH);
 
                 FISH[j]->setTargets(FOOD);
              //   FISH[j]->move();
@@ -225,7 +228,7 @@ int main(void){
 	}
 
 	for(int j = 0; j < FISH.size(); j++){
-		checkCollision(FISH);
+	//	checkCollision(FISH);
 		FISH[j]->move(FOOD);
 	}
 

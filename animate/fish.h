@@ -13,7 +13,7 @@ using namespace std;
 class fish{
 	public:
 		fish(); // Constructor
-		fish(int, int, SDL_Surface*); // non default constructor 
+		fish(int, int, SDL_Surface*, int, int); // non default constructor 
 		void handle_input(SDL_Event); // takes input
 		void move(vector<food*>); // moves fish
 		SDL_Surface* show(); // displays fish on screen
