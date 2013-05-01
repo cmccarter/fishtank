@@ -215,7 +215,7 @@ if (turnStatus == 0){
                                 }
                         }
                 else
-                    	{if(((fix +25 >= fox) && (fix -25 <= fox)) && ((fiy +10 foy)&&(fiy -10 <= foy)))
+                    	{if(((fix +25 >= fox) && (fix -25 <= fox)) && ((fiy +10>= foy)&&(fiy -10 <= foy)))
                                 {FOOD[i]->execute();
                                 }
                         }
