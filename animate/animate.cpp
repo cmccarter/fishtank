@@ -382,26 +382,31 @@ void clean_up(){
 
 double getDistance(fish* fish1, fish* fish2){
 	double xDist;
-	double yDist;
+//	double yDist;
 	xDist = abs(fish1->getX() - fish2->getX());
-	yDist = abs(fish1->getY() - fish1->getY());
-	cout << "Distance b/w fish 1 and 2 is: " << sqrt(pow(xDist,2)+pow(yDist,2)) << endl;
-	return sqrt(pow(xDist,2)+pow(yDist,2));
+//	yDist = abs(fish1->getY() - fish1->getY());
+//	cout << "Distance b/w fish 1 and 2 is: " << sqrt(pow(xDist,2)+pow(yDist,2)) << endl;
+//	return sqrt(pow(xDist,2)+pow(yDist,2));
+	
+	return xDist;
 }
 
 void checkCollision(vector<fish*> FISH){
 //	int temp;
-	for(int r = 0; r < FISH.size(); r++){
-		for(int ISO = 1; ISO < FISH.size()-1; ISO++){
+	for(int r = 0; r < FISH.size()-1; r++){
+		for(int ISO = r+1; ISO < FISH.size(); ISO++){
 			if(r == ISO) continue;
-			if(getDistance(FISH[r], FISH[ISO]) < 150 ){
+			if(getDistance(FISH[r], FISH[ISO]) < 150  && abs(FISH[r]->getXvel() + FISH[ISO]->getXvel()) > abs(FISH[r]->getXvel()) && (abs(FISH[r]->getY() - FISH[ISO]->getY()) < 40 )){
+				cout << "Collision Detected" << endl;
 		//	temp = FISH[1]->getXvel();
-			FISH[r]->setXvel(-FISH[r]->getXvel());
-			FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
-			//FISH[r]->setAvgHeight(300);
+			//SDL_Delay(10);
+			FISH[r]->setXvel(-FISH[r]->getXvel() - rand()%3);
+		//	FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
+		//	FISH[r]->setAvgHeight(300);
 		//	FISH[r]->move();
 		//	FISH[ISO]->move();
-			} 
+			//cout << "Y diff b/w fish 1 and 2: " << abs(FISH[r]->getY() - FISH[ISO]->getY()) << endl;
+			}
 
 		}
 	//	if(r == ISO) continue;

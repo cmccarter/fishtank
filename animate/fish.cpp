@@ -13,6 +13,7 @@
 #include "fish.h"
 #include "food.h"
 #include "global.h"
+#include <time.h>
 
 //creates a vector to store all food items being shown at once
 vector< food* > FOOD;
@@ -63,10 +64,11 @@ fish::fish(int a, int b, SDL_Surface* input){
 	offset = 0;
 
 	frame = 0;
-	fish_height = 200;
-	fish_width = 100;
+	fish_height = 80;
+	fish_width = 107;
 
 	image = input;
+	//srand (time(NULL));
 
 	// offsets for hit box
 //	fishBox.y = 0;
@@ -84,9 +86,9 @@ fish::fish(int a, int b, SDL_Surface* input){
 	pChangeDirectionY = 0;
     maxChangeDirectionX = 500;
 	maxChangeDirectionY = 20;
-	maxSpeed = 15;
+	maxSpeed = 8;
 	wanderTotalSpeed = 9;
-	avgHeight = 200;
+	avgHeight = 100 + rand()%220;
 	turnStatus = 0;
 	set_clips();
 }
@@ -145,11 +147,19 @@ if (turnStatus == 0){
                 //wander
 		cout << "Wandering..." << endl;
                 pChangeDirectionX = pChangeDirectionX + 1;
-                if(x<20 & xVel < 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((20-x),2);
-                if(x+fish_width > 980 & xVel > 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((980-x),2);
-		
+                if(x<20 && xVel < 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((20-x),2);
+                if(x+fish_width > 980 && xVel > 0) pChangeDirectionX = pChangeDirectionX + fabs(xVel)*pow((980-x),2);
+
+		xVel = xVel + ((1-rand()%3) / 1);
+		if (xVel > maxSpeed) xVel = xVel - (rand()%3)/1;
+		if (xVel < 2 && xVel >= 0) xVel = xVel + (rand()%3)/1;
+		if (xVel < -maxSpeed) xVel = xVel + (rand()%3)/1;
+		if (xVel > -2 && xVel <= 0) xVel = xVel - (rand()%3)/1;
 
 		if (y > avgHeight + 20 || y < avgHeight - 20){
+			cout << "Out of average bounds." << endl;
+			if(xVel == 0) xVel = 3 - rand()%7;
+			yVel = -2;
 			pChangeDirectionY = 0;
 			//force a change of direction if the fish is moving away from its average height
 			if (((y > avgHeight + 20)&&(yVel > 0))||((y < avgHeight - 20)&&(yVel < 0 ))){
@@ -159,8 +169,8 @@ if (turnStatus == 0){
 		}	
 
 		pChangeDirectionY = pChangeDirectionY + 1;
-		if(y<50 & yVel < 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((50-y),2);
-		if(y>550 & yVel > 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((550-y),2);
+		if(y<50 && yVel < 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((50-y),2);
+		if(y>550 && yVel > 0) pChangeDirectionY = pChangeDirectionY + fabs(yVel)*pow((550-y),2);
 
         } else {
                 //follow the food
@@ -180,6 +190,7 @@ if (turnStatus == 0){
 
 
 	if (pChangeDirectionX > maxChangeDirectionX){
+				cout << "Flipped" << endl;
                 xVel = -xVel;
                 pChangeDirectionX = 0;
 		turnStatus = 1;
@@ -221,6 +232,7 @@ if (turnStatus == 0){
 //	fishBox.y = y;
 
         if((x< 0) || (x + fish_width > 1000)){
+        		cout << "Edge" << endl;
                 xVel = -xVel;
                 pChangeDirectionX = 0;
         }
@@ -251,12 +263,12 @@ int fish::getY(){
 	return y - 70;
 }
 
-void fish::setXvel(int xin){
+void fish::setXvel(double xin){
 	xVel = xin;
 	return;
 }
 
-void fish::setYvel(int yin){
+void fish::setYvel(double yin){
 	yVel = yin;
 	return;
 }
