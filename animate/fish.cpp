@@ -285,7 +285,7 @@ void fish::setTargets(vector< food*> FOOD){
         int closestDistance;
         int closestElement;
         //how far the fish should be able to sense food (x^2 + y^2)
-        int proximityAwareness = 500000;
+        int proximityAwareness = 50000;
         int tempDistance = 0;
 
         //find closest food

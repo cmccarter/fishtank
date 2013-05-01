@@ -170,8 +170,9 @@ int main(void){
 
         //for each fish, determine where it is headed (not actually changing x or y)
         for(int j = 0; j < FISH.size(); j++){
+        	                checkCollision(FISH);
+
                 FISH[j]->setTargets(FOOD);
-            //    checkCollision(FISH);
              //   FISH[j]->move();
         }
 
@@ -396,11 +397,11 @@ void checkCollision(vector<fish*> FISH){
 	for(int r = 0; r < FISH.size()-1; r++){
 		for(int ISO = r+1; ISO < FISH.size(); ISO++){
 			if(r == ISO) continue;
-			if(getDistance(FISH[r], FISH[ISO]) < 150  && abs(FISH[r]->getXvel() + FISH[ISO]->getXvel()) > abs(FISH[r]->getXvel()) && (abs(FISH[r]->getY() - FISH[ISO]->getY()) < 40 )){
+			if(getDistance(FISH[r], FISH[ISO]) < 150  && abs(FISH[r]->getXvel() + FISH[ISO]->getXvel()) > abs(FISH[r]->getXvel()) && (abs(FISH[r]->getY() - FISH[ISO]->getY()) < 600 )){
 				cout << "Collision Detected" << endl;
 		//	temp = FISH[1]->getXvel();
 			//SDL_Delay(10);
-			FISH[r]->setXvel(-FISH[r]->getXvel() - rand()%3);
+			FISH[r]->setXvel(-FISH[r]->getXvel());
 		//	FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
 		//	FISH[r]->setAvgHeight(300);
 		//	FISH[r]->move();
