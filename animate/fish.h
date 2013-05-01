@@ -21,6 +21,8 @@ class fish{
 
 		int getX();
 		int getY();
+		int getXvel();
+		int getYvel();
 		void setYvel(int);
 		void setXvel(int);
 //		SDL_Rect fishBox;
@@ -33,7 +35,6 @@ class fish{
 		//killing commands
 		void execute(); //this command terminates the fish
 		int condemned(); //returns a 1 if it needs to be killed
-
 	private:
                //behavior controls
                 int pChangeDirectionY;

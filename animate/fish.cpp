@@ -41,9 +41,9 @@ fish::fish(){
 	kill = 0;
 
 	//behavior control
-        pChangeDirectionX = 0;
+    pChangeDirectionX = 0;
 	pChangeDirectionY = 0;
-        maxChangeDirectionX = 500;
+    maxChangeDirectionX = 500;
 	maxChangeDirectionY = 20;
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
@@ -78,9 +78,9 @@ fish::fish(int a, int b, SDL_Surface* input){
 	kill = 0;
 
 	//behavior control
-        pChangeDirectionX = 0;
+    pChangeDirectionX = 0;
 	pChangeDirectionY = 0;
-        maxChangeDirectionX = 500;
+    maxChangeDirectionX = 500;
 	maxChangeDirectionY = 20;
 	maxSpeed = 15;
 	wanderTotalSpeed = 9;
@@ -308,3 +308,10 @@ void fish::setTargets(vector< food*> FOOD){
 	return;
 }
 
+int fish::getXvel(){
+	return xVel;
+}
+
+int fish::getYvel(){
+	return yVel;
+}

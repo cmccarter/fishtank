@@ -2,6 +2,7 @@
 #define GLOBAL_H
 
 #include <iostream>
+#include "fish.h"
 
 using namespace std;
 
@@ -11,9 +12,8 @@ using namespace std;
 	SDL_Surface* load_image(string);
 	void apply_surface(int, int, SDL_Surface*, SDL_Surface*);
 	void apply_rect(int, int, SDL_Surface*, SDL_Surface*, SDL_Rect*);
-
-	bool check_collision( SDL_Rect, SDL_Rect);
-
+	double getDistance(fish*, fish*);
+	void checkCollision(vector<fish*>);
 	//screen attributes
 extern 	const int SCREEN_WIDTH;
 extern 	const int SCREEN_HEIGHT;

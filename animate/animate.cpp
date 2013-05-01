@@ -8,6 +8,7 @@
 #include "food.h"
 #include "bubble.h"
 #include "global.h"
+#include <math.h>
 
 using namespace std;
 
@@ -95,6 +96,7 @@ int main(void){
 	//initializes fish
 	FISH.push_back(new fish(100, 100, fishtest));
 	FISH.push_back(new fish(400, 400, fishtest));
+	FISH.push_back(new fish(800, 400, fishtest));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;
@@ -169,6 +171,8 @@ int main(void){
         //for each fish, determine where it is headed (not actually changing x or y)
         for(int j = 0; j < FISH.size(); j++){
                 FISH[j]->setTargets(FOOD);
+            //    checkCollision(FISH);
+             //   FISH[j]->move();
         }
 
 /* ---------------------MAIN LOOP: LOGIC ---------------- */
@@ -191,6 +195,7 @@ int main(void){
 	}
 
 	for(int j = 0; j < FISH.size(); j++){
+		checkCollision(FISH);
 		FISH[j]->move();
 	}
 
@@ -253,9 +258,7 @@ int main(void){
 		}
         }
 
-	for(int j = 0; j < FISH.size(); j++){
-		//perform similar computation
-	}
+	
 
 	
 	}
@@ -375,4 +378,42 @@ void clean_up(){
 	SDL_FreeSurface(NULL);
 	//Quit SDL
 	SDL_Quit();
+}
+
+double getDistance(fish* fish1, fish* fish2){
+	double xDist;
+	double yDist;
+	xDist = abs(fish1->getX() - fish2->getX());
+	yDist = abs(fish1->getY() - fish1->getY());
+	cout << "Distance b/w fish 1 and 2 is: " << sqrt(pow(xDist,2)+pow(yDist,2)) << endl;
+	return sqrt(pow(xDist,2)+pow(yDist,2));
+}
+
+void checkCollision(vector<fish*> FISH){
+//	int temp;
+	for(int r = 0; r < FISH.size(); r++){
+		for(int ISO = 0; ISO < FISH.size()-1; ISO++){
+			if(r == ISO) continue;
+			if(getDistance(FISH[r], FISH[ISO]) < 100 ){
+		//	temp = FISH[1]->getXvel();
+			FISH[r]->setXvel(-FISH[r]->getXvel());
+			FISH[ISO]->setXvel(-FISH[ISO]->getXvel());
+			//FISH[r]->setYvel(10);
+		//	FISH[r]->move();
+		//	FISH[ISO]->move();
+			} 
+
+		}
+	//	if(r == ISO) continue;
+	}
+		
+	/*for(int j = 0; j < FISH.size(); j++){
+		for(int n = 0; n < FISH.size()-1; n++){
+			if(n+1 == j) continue;
+			if(getDistance(FISH[j], FISH[n]) < 200 && (FISH[j]->getXvel()+FISH[n]->getXvel()) >= abs(FISH[j]->getXvel())){
+				FISH[n]->setXvel(-FISH[n]->getXvel());
+			}
+			else FISH[n]->setXvel(4);
+		}
+	}*/
 }
