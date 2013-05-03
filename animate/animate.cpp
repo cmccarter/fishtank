@@ -147,13 +147,17 @@ fish1.x = 107;
 				//if the mouse is in an appropriate area
 				if(mouseEvent.button.x > 90 && mouseEvent.button.x < 910 && mouseEvent.button.y > 10 && mouseEvent.button.y < 420){
 					//make a fish
-					switch(rand()%3)
+					switch(rand()%5)
 					{
 						case 0: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest, fish1.y, fish1.x));
 							break;
 						case 1: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, goldfish, fish1.y, fish1.x));
 							break;
 						case 2: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, silverfish, fish1.y, fish1.x));
+							break;
+						case 3: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, bubbles, 160, 130));
+							break;
+						case 4: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, bluebubbles, 160, 130));
 							break;
 						default: FISH.push_back(new fish(mouseEvent.button.x, mouseEvent.button.y, fishtest, fish1.y, fish1.x));
 							break;
