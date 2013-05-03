@@ -32,6 +32,7 @@ using namespace std;
 	SDL_Surface* silverfish = NULL;
 	SDL_Surface* goldfish = NULL;
 	SDL_Surface* bubbles = NULL;
+	SDL_Surface* bluebubbles = NULL;
 
 	// Rect for sprite sheeet clips
 
@@ -86,7 +87,8 @@ fish1.x = 107;
 	fishtest = IMG_Load("images/gurgleShrunk.png");
 	goldfish = IMG_Load("images/goldfish.png");
 	silverfish = IMG_Load("images/silverfish.png");
-	bubbles = IMG_Load("images/bubblesSprite.png");
+	bubbles = IMG_Load("images/bubblesSpriteResize.png");
+	bluebubbles = IMG_Load("images/bubblesBlueSpriteRemapped.png");
 
 	cout << "Load the bubbles!" << endl;
 	SDL_Surface* medium_bubblepic = IMG_Load("images/medium_bubble.png"); //use bubble for test
@@ -108,7 +110,8 @@ fish1.x = 107;
 	FISH.push_back(new fish(100, 100, fishtest, 80, 107));
 	FISH.push_back(new fish(400, 400, goldfish, 80, 107));
 	FISH.push_back(new fish(800, 400, silverfish, 80, 107));
-//	FISH.push_back(new fish(600, 400, bubbles, 489, 388));
+	FISH.push_back(new fish(600, 400, bubbles, 160, 130));
+	FISH.push_back(new fish(600, 300, bluebubbles, 160, 130));
 
 	//active fish (this variable will indicate which fish is active) (-1 means no fish)
 	int active_fish = -1;
